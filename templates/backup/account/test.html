@@ -1,0 +1,7 @@
+<!-- 삭제 -->
+{{ userteam.team.introduce }}
+{% for i in userteam.team.team_leader.all %}
+{% if user.id == i.id %}
+<a href="{% url 'team:team_delete' userteam.team.id i.id %}">팀 삭제!</a>
+{% endif %}
+{% endfor %}

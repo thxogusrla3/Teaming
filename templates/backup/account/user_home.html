@@ -1,0 +1,12 @@
+<h1>{{user.username}}의 페이지입니다!</h1>
+<p><a href="{% url 'account:sign_out' %}">Sign out</a></p>
+<a href="{% url 'team:create_team' user.id %}"><h1>팀만들래?</h1></a>
+<a href="{% url 'mail:mailbox' user.id %}">메일함</a>
+<a href="{% url 'account:edit' user.pk %}">개인정보수정</a>
+{% for userteam in user_team %}
+<p>
+<a href="{% url 'team:detail_team' userteam.team.id user.id %}">{{ userteam.team.team_name }}</a>
+소개:{{ userteam.team.introduce }}
+</p>
+<br>
+{% endfor %}

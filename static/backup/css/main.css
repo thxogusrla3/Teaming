@@ -1,0 +1,43 @@
+body .body_container #loginbutton {
+    margin-left: 60%;
+}
+
+body .body_container{
+    margin-top: 0;
+    text-align: center;
+}
+footer {
+    background-color: black;
+    padding-top: 0;
+}
+
+footer p{
+    text-align: center;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+form {
+    margin-top: 0;
+    margin-left: 35%;
+    margin-bottom: 5%;
+    margin-right:10%;
+}
+form .write{
+    margin-left: 5%;
+    /* margin-bottom: 20%; */
+    padding-bottom: 0;
+    
+}
+form button {
+    margin-right: 45%;
+}
+form img  {
+    margin-top: 5%;
+    margin-right: 65%;
+    /* margin-bottom: 20%; */
+    padding-bottom: 5%;
+}
+#sign_up{
+    margin-top: 3%;
+}

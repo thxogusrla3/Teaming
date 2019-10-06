@@ -1,0 +1,114 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div id="schedule" style="text-align: center">
+        <h2>시간표 설정</h2>
+        <script type="text/javascript">
+            function create_table() {
+                var table = document.createElement("table");
+                table.className = "table table-bordered";
+                var weeks = ["", "월", "화", "수", "목", "금", "토", "일"];
+
+                var first_tr = document.createElement("tr");
+                for (var i = 0; i < weeks.length; i++) {
+                    var td = document.createElement("td");
+                    td.innerText = weeks[i];
+                    first_tr.appendChild(td);
+                }
+                var thead = document.createElement("thead");
+                thead.appendChild(first_tr);
+
+                table.appendChild(thead);
+
+                var user_time_table = "{{ user.time_table }}";
+                var tbody = document.createElement("tbody");
+
+                for (var j = 0; j < 13; j++) {
+                    var tr = document.createElement("tr");
+                    var first_td = document.createElement("td");
+                    first_td.innerText = (j + 9) + "시";
+                    tr.appendChild(first_td);
+
+                    for (var k = 0; k < 7; k++) {
+                        var td = create_td(user_time_table[j * 7 + k]);
+                        td.id = j + ',' + k;
+                        tr.appendChild(td);
+                    }
+
+                    tbody.appendChild(tr);
+                }
+                table.appendChild(tbody);
+                table.style.textAlign = "center";
+                table.style.width = "60%";
+                table.style.marginLeft = "auto";
+                table.style.marginRight = "auto";
+                var container = document.getElementById("schedule");
+                container.appendChild(table);
+            }
+
+            function create_td(binary) {
+                var td = document.createElement("td");
+                td.setAttribute("onclick", "change_color(this)");
+                if (binary == '1') {
+                    td.style.backgroundColor = "red";
+                }
+                return td
+            }
+
+            function change_color(tag) {
+                if (tag.style.backgroundColor == "red") {
+                    tag.style.removeProperty("background-color");
+                } else {
+                    tag.style.backgroundColor = "red";
+                }
+            }
+
+            function get_binary() {
+                var td_tags = document.getElementsByTagName("td");
+                var result = "";
+
+                for (var i = 0; i < td_tags.length; i++) {
+                    if (td_tags[i].id != "") {
+                        if (td_tags[i].style.backgroundColor == "red") {
+                            result += 1;
+                        } else {
+                            result += 0;
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+            function submit(bool) {
+                var time_table = document.getElementsByName("time_table")[0];
+
+                if (bool) {
+                    var form = document.getElementById("schedule_form");
+                    time_table.value = get_binary();
+                    form.submit();
+                } else {
+                    var td_tags = document.getElementsByTagName("td");
+                    time_table.value = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+                    for (var i = 0; i < td_tags.length; i++) {
+                        if (td_tags[i].style.backgroundColor == "red") {
+                            td_tags[i].style.removeProperty("background-color");
+                        }
+                    }
+                }
+            }
+
+            create_table();
+        </script>
+
+        <button type="button" class="btn btn-success btn-lg" onclick="submit(true)">시간표 바꾸기</button>
+        <button type="button" class="btn btn-danger btn-lg" onclick="submit(false)">시간표 초기화</button>
+
+        <form method="post" id="schedule_form">
+            {% csrf_token %}
+            <div style="visibility: hidden">
+                {{ form }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

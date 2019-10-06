@@ -1,0 +1,104 @@
+{% load staticfiles %}
+<!-- 첫번째페이지(로그인)를 띄웁니다. -->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Righteous&display=swap' %}" rel="stylesheet">
+	<title>u임승차</title>
+</head>
+
+<body>
+	<nav>
+		<div class="nav_container">
+			<div class="nav_logo">
+				<img src="{% static 'img/캡처4.png' %}">
+			</div>
+			<div class="nav_center">
+				Happy group work
+			</div>
+			<div class="nav_login">
+				<form method="POST" action="{% url 'account:sign_in' %}">
+					{% csrf_token %}
+					<table>
+						<tbody>
+							<tr>
+								<td class="login_tool">
+									<label for="email">
+										이메일 또는 휴대폰
+									</label>
+								</td>
+								<td class="login_tool">
+									<label for="pass">
+										비밀번호
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<td>{{ form.username }}</td>
+								<td>{{ form.password }}</td>
+								<td>
+									<button type="submit" class="submit_button">로그인</button>
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</nav>
+	<header>
+		<div class="background_img">
+			<img src="{% static 'img/teme.jpg' %}">
+		</div>
+		<div class="background_form">
+			<hr>회원가입</hr>
+			<hr>
+			</hr>
+			<form method="POST" action="{% url 'account:sign_up' %}">
+				{% csrf_token %}
+				<table>
+					<tr>
+						<td>아이디</td>
+						<td>{{ up_form.username }}</td>
+					</tr>
+					<tr>
+						<td>비밀번호</td>
+						<td>{{ up_form.password }}</td>
+					</tr>
+					<tr>
+						<td>비밀번호 재입력</td>
+						<td>{{ up_form.check_password }}</td>
+					</tr>
+					<tr>
+						<td>이메일</td>
+						<td>{{ up_form.email }}</td>
+					</tr>
+					<tr>
+						<td>휴대전화번호</td>
+						<td>{{ up_form.phone_number }}</td>
+					</tr>
+					<tr>
+						<td>성</td>
+						<td>{{ up_form.first_name }}</td>
+					</tr>
+					<tr>
+						<td>이름</td>
+						<td>{{ up_form.last_name }}</td>
+					</tr>
+					<tr><td><input type="submit" value="회원가입"></td></tr>
+				</table>
+			</form>
+		</div>
+
+
+	</header>
+	<footer>
+		<p>copyright &copy; Likelion, 2017</p>
+	</footer>
+
+</body>
+
+</html>
