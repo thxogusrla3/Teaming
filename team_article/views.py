@@ -8,21 +8,24 @@ from django.utils import timezone
 # Create your views here.
 def workspace(request, team_pk, user_pk):
     team = get_object_or_404(Team, pk=team_pk) #팀에 대한 정보를 가져오고
-    user = get_object_or_404(User, pk=user_pk) #사용자에 대한 정보를 가져오고
-    now_user = request.user    
+    # user = get_object_or_404(User, pk=user_pk) #사용자에 대한 정보를 가져오고
+    now_user = get_object_or_404(User, pk=user_pk)
+    member = TeamMember.objects.filter(team=team)
+    user = request.user    
     urlform = ArticleUrlForm()
     fileform = ArticleFileForm()
 #     ur = 'https://docs.djangoproject.com/en/2.2/ref/templates/builtins/' 
-    search_url = ArticleUrl.objects.filter(team=team, user=user)
-    search_file = ArticleFile.objects.filter(team=team, user=user)
+    search_url = ArticleUrl.objects.filter(team=team, user=now_user)
+    search_file = ArticleFile.objects.filter(team=team, user=now_user)
 
     return render(request, 'team_article/workspace.html', {
         'search_url':search_url, 
         'search_file':search_file, 
         'team':team, 'user':user,
         'urlform':urlform,
-        'fileform':fileform,
         'now_user':now_user,
+        'fileform':fileform,
+        'user_team':member,
         # 'ur':ur,
         })
 

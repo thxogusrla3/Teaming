@@ -8,7 +8,6 @@ class SignUpForm(forms.ModelForm):
                                                                        'placeholder': 'Again Password'}),
                                      required=True,
                                      label='비밀번호 확인')
-
     class Meta:
         model = User
         fields = ['username',

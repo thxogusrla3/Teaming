@@ -6,8 +6,17 @@ from .models import Team, TeamMember
 class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
-        fields = ['team_name', 'introduce', 'team_photo_url']
-
+        fields = ['team_name', 'introduce']
+        widgets = {
+            'team_name':forms.TextInput(attrs={'class':'form-control',
+                                                'placeholder': 'team_name'}),
+            'introduce':forms.TextInput(attrs={'class':'form-control',
+                                                'placeholder': 'introduce'})
+        }
+        labels = {
+            'team_name':'팀 이름',
+            'introduce':'팀 소개'
+        }
 # class AddForm(forms.Form):
 #     username = forms.CharField(max_length=20)
 
