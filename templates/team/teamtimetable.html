@@ -1,235 +1,319 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<ol class="breadcrumb page-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
+    <li class="breadcrumb-item"><a href="javascript:void(0);">팀 자료실</a></li>
+</ol>
 
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon fal fa-credit-card-front'></i> 저장 및 공유
+            <small>
+                당신의 자료들을 보관, 공유해주세요!
+            </small>
+        </h1>
+    </div>
+    
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-
-<style type="text/css">
-
-.table table-bordered1{
-    text-align: center;
-    width: auto;
-    height: auto;
-    margin-left: auto;
-    margin-right: 15%;
-}
-.inner-block {
-    padding: 8em 2em 4em 2em;
-    background: #fafafa;
-}
-.target {
-    white-space: pre;
-}
-td{
-    border: 1px solid #444444;
-    border-collapse: collapse;
-    padding: 0px;
-}
-</style>
+<div class="row">
+    <style>
+    #td_size{
+        width: 80px;
+        height: auto;
+        text-align: center;
+    }
+    .kth_td_style{
+        text-align: center;
+    }
+    </style>
     {% for i in user_team.all %}
-        <script>
-        $( function () {
-            var a = "{{ i.total_time_table }}";
-            var user_name = "{{i.user.username}}";
-            let count = 0;
-
-            for (let i = 0; i < 13; i++) {   
-                for (let j = 0; j < 7; j++) {
-                    if(a.charAt(count) != 0){
-                        $('#'+i+j).text( user_name+"\n"+$('#'+i+j).text());
-                    }
-                    count++;
-                }
+    <script>
+    $( function () {
+        var a = "{{ i.total_time_table }}";
+        var user_name = "{{i.user.username}}";
+        let count = 0;
+        for (let i = 0; i < 13; i++) {   
+            for (let j = 0; j < 7; j++) {
+                // $('#'+i+j).addClass("kth_td_style");
+                if(a.charAt(count) != 0){
+                    $('#'+i+j).text( user_name+"\n"+$('#'+i+j).text());
+                } //(#ij).text(kth + )
+                count++;
             }
-        });
-        </script>
+        }
+    });
+    
+    </script>
     {% endfor %}
-        <p style="text-align: center; font-size: 30px;"><a href="{% url 'team:detail_team' team.pk%}"> Home</p></a>
-<table class="table table-bordered1" style="text-align: center; width: 85%; margin: auto;  white-space: pre; margin-top: 30px; padding: 0px; border: 1px solid #444444;
-border-collapse: collapse;">
-    <thead>
-        <tr>
-            <td></td>
-            <td>월</td>
-            <td>화</td>
-            <td>수</td>
-            <td>목</td>
-            <td>금</td>
-            <td>토</td>
-            <td>일</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>9시</td>
-            <td onclick="change_color(this)" id="00" ></td> 
-            <td onclick="change_color(this)" id="01" ></td>
-            <td onclick="change_color(this)" id="02"></td>
-            <td onclick="change_color(this)" id="03"></td>
-            <td onclick="change_color(this)" id="04">
-            </td>
-            <td onclick="change_color(this)" id="05"></td>
-            <td onclick="change_color(this)" id="06"></td>
-        </tr>
-        <tr>
-            <td>10시</td>
-            <td onclick="change_color(this)" id="10">
-            </td>
-            <td onclick="change_color(this)" id="11"></td>
-            <td onclick="change_color(this)" id="12"></td>
-            <td onclick="change_color(this)" id="13">
-            </td>
-            <td onclick="change_color(this)" id="14"></td>
-            <td onclick="change_color(this)" id="15"></td>
-            <td onclick="change_color(this)" id="16"></td>
-        </tr>
-        <tr>
-            <td>11시</td>
-            <td onclick="change_color(this)" id="20">
-            </td>
-            <td onclick="change_color(this)" id="21">
-            </td>
-            <td onclick="change_color(this)" id="22">
-            </td>
-            <td onclick="change_color(this)" id="23"></td>
-            <td onclick="change_color(this)" id="24"></td>
-            <td onclick="change_color(this)" id="25">
-            </td>
-            <td onclick="change_color(this)" id="26"></td>
-        </tr>
-        <tr>
-            <td>12시</td>
-            <td onclick="change_color(this)" id="30">
-            </td>
-            <td onclick="change_color(this)" id="31"></td>
-            <td onclick="change_color(this)" id="32">
-            </td>
-            <td onclick="change_color(this)" id="33"></td>
-            <td onclick="change_color(this)" id="34">
-            </td>
-            <td onclick="change_color(this)" id="35"></td>
-            <td onclick="change_color(this)" id="36"></td>
-        </tr>
-        <tr>
-            <td>13시</td>
-            <td onclick="change_color(this)" id="40"></td>
-            <td onclick="change_color(this)" id="41"></td>
-            <td onclick="change_color(this)" id="42"></td>
-            <td onclick="change_color(this)" id="43">
-            </td>
-            <td onclick="change_color(this)" id="44"></td>
-            <td onclick="change_color(this)" id="45"></td>
-            <td onclick="change_color(this)" id="46">
-            </td>
-        </tr>
-        <tr>
-            <td>14시</td>
-            <td onclick="change_color(this)" id="50">
-            </td>
-            <td onclick="change_color(this)" id="51">
-            </td>
-            <td onclick="change_color(this)" id="52"></td>
-            <td onclick="change_color(this)" id="53"></td>
-            <td onclick="change_color(this)" id="54"></td>
-            <td onclick="change_color(this)" id="55"></td>
-            <td onclick="change_color(this)" id="56"></td>
-        </tr>
-        <tr>
-            <td>15시</td>
-            <td onclick="change_color(this)" id="60"></td>
-            <td onclick="change_color(this)" id="61"></td>
-            <td onclick="change_color(this)" id="62"></td>
-            <td onclick="change_color(this)" id="63">
-            </td>
-            <td onclick="change_color(this)" id="64"></td>
-            <td onclick="change_color(this)" id="65">
-            </td>
-            <td onclick="change_color(this)" id="66">
-            </td>
-        </tr>
-        <tr>
-            <td>16시</td>
-            <td onclick="change_color(this)" id="70"></td>
-            <td onclick="change_color(this)" id="71">
-            </td>
-            <td onclick="change_color(this)" id="72"></td>
-            <td onclick="change_color(this)" id="73"></td>
-            <td onclick="change_color(this)" id="74"></td>
-            <td onclick="change_color(this)" id="75"></td>
-            <td onclick="change_color(this)" id="76"></td>
-        </tr>
-        <tr>
-            <td>17시</td>
-            <td onclick="change_color(this)" id="80"></td>
-            <td onclick="change_color(this)" id="81"></td>
-            <td onclick="change_color(this)" id="82"></td>
-            <td onclick="change_color(this)" id="83"></td>
-            <td onclick="change_color(this)" id="84"></td>
-            <td onclick="change_color(this)" id="85">
-            </td>
-            <td onclick="change_color(this)" id="86">
-            </td>
-        </tr>
-        <tr>
-            <td>18시</td>
-            <td onclick="change_color(this)" id="90">
-            </td>
-            <td onclick="change_color(this)" id="91"></td>
-            <td onclick="change_color(this)" id="92"></td>
-            <td onclick="change_color(this)" id="93">
-            </td>
-            <td onclick="change_color(this)" id="94"></td>
-            <td onclick="change_color(this)" id="95"></td>
-            <td onclick="change_color(this)" id="96"></td>
-        </tr>
-        <tr>
-            <td>19시</td>
-            <td onclick="change_color(this)" id="100"></td>
-            <td onclick="change_color(this)" id="101">
-            </td>
-            <td onclick="change_color(this)" id="102"></td>
-            <td onclick="change_color(this)" id="103"></td>
-            <td onclick="change_color(this)" id="104"></td>
-            <td onclick="change_color(this)" id="105">
-            </td>
-            <td onclick="change_color(this)" id="106"></td>
-        </tr>
-        <tr>
-            <td>20시</td>
-            <td onclick="change_color(this)" id="110">
-            </td>
-            <td onclick="change_color(this)" id="111"></td>
-            <td onclick="change_color(this)" id="112"></td>
-            <td onclick="change_color(this)" id="113"></td>
-            <td onclick="change_color(this)" id="114"></td>
-            <td onclick="change_color(this)" id="115"></td>
-            <td onclick="change_color(this)" id="116"></td>
-        </tr>
-        <tr>
-            <td>21시</td>
-            <td onclick="change_color(this)" id="120"></td>
-            <td onclick="change_color(this)" id="121"></td>
-            <td onclick="change_color(this)" id="122"></td>
-            <td onclick="change_color(this)" id="123"></td>
-            <td onclick="change_color(this)" id="124">
-            </td>
-            <td onclick="change_color(this)" id="125">
-            </td>
-            <td onclick="change_color(this)" id="126"></td>
-        </tr>
-    </tbody>
-</table>
+    
+    <script >
+    //몇명인지 체크
+    // $(function(){
+    //     for (let i = 0; i < 13; i++) {   
+    //         for (let j = 0; j < 7; j++) {
+    //             if($('#'+i+j).text() !== ""){
+    //                 $('#'+i+j).text($('#'+i+j).text()+$('#'+i+j).text().split(' ').length);
+    //             }
+    //         }
+    //     }
+    // });
+    function team_time_add(team_pk){
+        var add_time_table = confirm("팀에 시간표를 추가하시겠습니까?")
+        if (add_time_table == true ){
+            $.ajax({
+                url: '/team/'+team_pk+'/'+'add_time_table',
+                success: function(data){
+                    if (data > 0){
+                        alert("이미 추가된 시간표 입니다!")
+                    }
+                    else if(data==0){
+                        alert("시간표가 성공적으로 추가 되었습니다")
+                        // location.href = '/team/'+team_pk;
+                        location.href = '/team/'+team_pk+'/'+'member_time_table';
+                    }
+                },
+                error: function(){
+                    console.log('실패');
+                }
+            })
+        }
+        else return;
+    }
+    function delete_team_timetable(team_pk){
+        var leave_team = confirm("팀에 추가된 시간표를 삭제하시겠습니까?")
+        if (leave_team == true){
+            $.ajax({
+                url: '/team/'+team_pk+'/delete_time_table',
+                success: function(data){
+                    if (data ==2){
+                        alert("추가된 시간표가 존재하지 않습니다");
+                    }
+                    else if(data==1){
+                        alert("시간표가 성공적으로 삭제 되었습니다.");
+                        location.href = '/team/'+team_pk;
+                    }
+                },
+                error: function(){
+                    console.log('실패');
+                }
+            })
+        }
+        else return;
+    }
+    </script>
+    <div class="col-sm-12">
+        <div class="card mb-g">
+            <h5 class="card-header bg-white">
+                <span class="fw-300"> <strong>{{team.team_name}}</strong> 전체 시간표 </span>
+            </h5>
+            <div class="card-body">
+                
+                <div class="frame-wrap bg-faded mb-3">
+                    <div class="custom-checkbox d-inline-flex mr-3">
+                            <a onclick="team_time_add('{{ team.pk }}')"style="color: black;">
+                            <button type="button" class="btn btn-default" id = "add_button">내 시간표 추가</button></a>
+                    </div>
+                    <div class=" custom-checkbox d-inline-flex mr-3">
+                            <a onclick="delete_team_timetable('{{ team.pk }}')"style="color: black;">
+                            <button type="button" class="btn btn-default">내 시간표 삭제</button></a>
+                    </div>
+                   
+                </div>
+                <h5 class="frame-heading p-0 bg-white mb-g">
+                    최근 수정 시간
+                </h5>
+                <div class="frame-wrap p-0 border-0 m-0" >
+                    <table class="table m-0 table-bordered table-sm" id="table-example" style="font-size: 20px;">
+                        <thead>
+                                <tr>
+                                    <td id="td_size"></td>
+                                    <td>월</td>
+                                    <td>화</td>
+                                    <td>수</td>
+                                    <td>목</td>
+                                    <td>금</td>
+                                    <td>토</td>
+                                    <td>일</td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td id="td_size">9시</td>
+                                    <td onclick="change_color(this)" id="00" ></td> 
+                                    <td onclick="change_color(this)" id="01" ></td>
+                                    <td onclick="change_color(this)" id="02"></td>
+                                    <td onclick="change_color(this)" id="03"></td>
+                                    <td onclick="change_color(this)" id="04">
+                                    </td>
+                                    <td onclick="change_color(this)" id="05"></td>
+                                    <td onclick="change_color(this)" id="06"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">10시</td>
+                                    <td onclick="change_color(this)" id="10">
+                                    </td>
+                                    <td onclick="change_color(this)" id="11"></td>
+                                    <td onclick="change_color(this)" id="12"></td>
+                                    <td onclick="change_color(this)" id="13">
+                                    </td>
+                                    <td onclick="change_color(this)" id="14"></td>
+                                    <td onclick="change_color(this)" id="15"></td>
+                                    <td onclick="change_color(this)" id="16"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">11시</td>
+                                    <td onclick="change_color(this)" id="20">
+                                    </td>
+                                    <td onclick="change_color(this)" id="21">
+                                    </td>
+                                    <td onclick="change_color(this)" id="22">
+                                    </td>
+                                    <td onclick="change_color(this)" id="23"></td>
+                                    <td onclick="change_color(this)" id="24"></td>
+                                    <td onclick="change_color(this)" id="25">
+                                    </td>
+                                    <td onclick="change_color(this)" id="26"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">12시</td>
+                                    <td onclick="change_color(this)" id="30">
+                                    </td>
+                                    <td onclick="change_color(this)" id="31"></td>
+                                    <td onclick="change_color(this)" id="32">
+                                    </td>
+                                    <td onclick="change_color(this)" id="33"></td>
+                                    <td onclick="change_color(this)" id="34">
+                                    </td>
+                                    <td onclick="change_color(this)" id="35"></td>
+                                    <td onclick="change_color(this)" id="36"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">13시</td>
+                                    <td onclick="change_color(this)" id="40"></td>
+                                    <td onclick="change_color(this)" id="41"></td>
+                                    <td onclick="change_color(this)" id="42"></td>
+                                    <td onclick="change_color(this)" id="43">
+                                    </td>
+                                    <td onclick="change_color(this)" id="44"></td>
+                                    <td onclick="change_color(this)" id="45"></td>
+                                    <td onclick="change_color(this)" id="46">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">14시</td>
+                                    <td onclick="change_color(this)" id="50">
+                                    </td>
+                                    <td onclick="change_color(this)" id="51">
+                                    </td>
+                                    <td onclick="change_color(this)" id="52"></td>
+                                    <td onclick="change_color(this)" id="53"></td>
+                                    <td onclick="change_color(this)" id="54"></td>
+                                    <td onclick="change_color(this)" id="55"></td>
+                                    <td onclick="change_color(this)" id="56"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">15시</td>
+                                    <td onclick="change_color(this)" id="60"></td>
+                                    <td onclick="change_color(this)" id="61"></td>
+                                    <td onclick="change_color(this)" id="62"></td>
+                                    <td onclick="change_color(this)" id="63">
+                                    </td>
+                                    <td onclick="change_color(this)" id="64"></td>
+                                    <td onclick="change_color(this)" id="65">
+                                    </td>
+                                    <td onclick="change_color(this)" id="66">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">16시</td>
+                                    <td onclick="change_color(this)" id="70"></td>
+                                    <td onclick="change_color(this)" id="71">
+                                    </td>
+                                    <td onclick="change_color(this)" id="72"></td>
+                                    <td onclick="change_color(this)" id="73"></td>
+                                    <td onclick="change_color(this)" id="74"></td>
+                                    <td onclick="change_color(this)" id="75"></td>
+                                    <td onclick="change_color(this)" id="76"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">17시</td>
+                                    <td onclick="change_color(this)" id="80"></td>
+                                    <td onclick="change_color(this)" id="81"></td>
+                                    <td onclick="change_color(this)" id="82"></td>
+                                    <td onclick="change_color(this)" id="83"></td>
+                                    <td onclick="change_color(this)" id="84"></td>
+                                    <td onclick="change_color(this)" id="85">
+                                    </td>
+                                    <td onclick="change_color(this)" id="86">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">18시</td>
+                                    <td onclick="change_color(this)" id="90">
+                                    </td>
+                                    <td onclick="change_color(this)" id="91"></td>
+                                    <td onclick="change_color(this)" id="92"></td>
+                                    <td onclick="change_color(this)" id="93">
+                                    </td>
+                                    <td onclick="change_color(this)" id="94"></td>
+                                    <td onclick="change_color(this)" id="95"></td>
+                                    <td onclick="change_color(this)" id="96"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">19시</td>
+                                    <td onclick="change_color(this)" id="100"></td>
+                                    <td onclick="change_color(this)" id="101">
+                                    </td>
+                                    <td onclick="change_color(this)" id="102"></td>
+                                    <td onclick="change_color(this)" id="103"></td>
+                                    <td onclick="change_color(this)" id="104"></td>
+                                    <td onclick="change_color(this)" id="105">
+                                    </td>
+                                    <td onclick="change_color(this)" id="106"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">20시</td>
+                                    <td onclick="change_color(this)" id="110">
+                                    </td>
+                                    <td onclick="change_color(this)" id="111"></td>
+                                    <td onclick="change_color(this)" id="112"></td>
+                                    <td onclick="change_color(this)" id="113"></td>
+                                    <td onclick="change_color(this)" id="114"></td>
+                                    <td onclick="change_color(this)" id="115"></td>
+                                    <td onclick="change_color(this)" id="116"></td>
+                                </tr>
+                                <tr>
+                                    <td id="td_size">21시</td>
+                                    <td onclick="change_color(this)" id="120"></td>
+                                    <td onclick="change_color(this)" id="121"></td>
+                                    <td onclick="change_color(this)" id="122"></td>
+                                    <td onclick="change_color(this)" id="123"></td>
+                                    <td onclick="change_color(this)" id="124">
+                                    </td>
+                                    <td onclick="change_color(this)" id="125">
+                                    </td>
+                                    <td onclick="change_color(this)" id="126"></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('input:checkbox').change(function()
+    {
+        if ($(this).is(":checked"))
+        {
+            $('#table-example').addClass($(this).attr("data-class"));
+        }
+        else
+        {
+            $('#table-example').removeClass($(this).attr("data-class"));
+        }
+    });
 
-</a>
-
-
+</script>
 {% endblock %}
-
-
-</a>
-
-
-
-
-                    

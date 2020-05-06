@@ -1,0 +1,3 @@
+for i in TeamMember.objects.filter(team__team_name='asdasd').values('user__time_table'):
+
+TeamTimeTable.objects.filter(team__pk=2, user__username='kth').count()//팀원 시간표가 추가 되어있다면 오류 추가시키지 못하게 ajax 처리할 것!

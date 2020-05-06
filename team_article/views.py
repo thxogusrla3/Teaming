@@ -26,6 +26,7 @@ def workspace(request, team_pk, user_pk):
         'now_user':now_user,
         'fileform':fileform,
         'user_team':member,
+        'member':member,
         # 'ur':ur,
         })
 

@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+.inner-block {
+    padding: 6em 2em 4em 2em;
+    background: #fafafa;
+}
+</style>
+<h1 style="text-align: center;">팀을 만들어주세요!</h1>
+
+{# <form action="" method="POST"> #}
+    
+{#  {% csrf_token %}#}
+{#    <table>       #}
+        {#            {{ teamform.as_table }}#}
+        {#    </table> #}
+            {#    <button type="submit"> 팀 생성! </button>#}
+            {#    </button>#}
+                {#</form> #}
+<div class="login-main">
+    <div class="login-block">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.team_name.id_for_label }}">팀 이름</label>
+                {{ form.team_name }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.introduce.id_for_label }}">팀 소개</label>
+                {{ form.introduce }}
+            </div>
+            <div class="forgot-top-grids">
+
+
+                <div class="clearfix"> </div>
+            </div>
+            <input type="submit" name="Sign In" value="팀만들기">	
+        </form>
+    </div>
+</div>
+{% endblock %}
+<!-- 
+<form action="" method="POST">
+    
+</form> 
+-->

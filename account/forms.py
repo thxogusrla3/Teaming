@@ -52,6 +52,11 @@ class SignUpForm(forms.ModelForm):
             raise forms.ValidationError("아이디가 이미 사용중 입니다.")
         return check_username
 
+    def clean_email(self):
+        check_email = self.cleaned_data['email']
+        if User.objects.filter(email=check_email).exists():
+            raise forms.ValidationError("이메일이 사용중 입니다.")
+        
     def clean_check_password(self):
         password = self.cleaned_data['password']
         check_password = self.cleaned_data['check_password']
@@ -65,7 +70,8 @@ class SignUpForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
+    # 폰 번호에 '-'가 2개 있어야 검증되서 통과함
+    
 
 class SignInForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',

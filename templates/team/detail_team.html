@@ -1,136 +1,362 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block content %}
-<style>
-.inner-block {
-    padding: 6em 2em 4em 2em;
-    background: #fafafa;
-}
-</style>
 <script type="text/javascript">
-function team_leave(team_pk, user_pk){
-    var leave_team = confirm("팀을 나가시겠습니까?")
-    if (leave_team == true){
-        location.href = '/team/'+team_pk+'/'+user_pk+'/'+'leave_team';
+    function team_leave(team_pk, user_pk){
+        var leave_team = confirm("팀을 나가시겠습니까?")
+        if (leave_team == true){
+            location.href = '/team/'+team_pk+'/'+user_pk+'/'+'leave_team';
+        }
+        else
+            return ;
     }
-    else
-        return ;
-}
-function team_invite(team_pk){
-    var username = prompt("초대할 사용자를 입력해 주세요!")
-    if (username != null){
-        $.ajax({
-            type:'get',
-            url: "/team/"+team_pk+'/add_member1?username='+username,
-            success: function(data){
-                if(data == 1){
-                    alert(username+"해당 사용자가 팀에 존재합니다!");
+    function team_invite(team_pk){
+        var username = prompt("초대할 사용자를 입력해 주세요!")
+        if (username != null){
+            $.ajax({
+                type:'get',
+                url: "/team/"+team_pk+'/add_member1?username='+username,
+                success: function(data){
+                    if(data == 1){
+                        alert(username+"해당 사용자가 팀에 존재합니다!");
+                    }
+                    else if(data == 2){
+                        alert(username+" 초대가 완료되었습니다.");
+                        location.href = '/team/'+team_pk;
+                    }
+                    else{
+                        alert(username+"해당 사용자가 존재 하지 않습니다!")
+                    }
+                },
+                error: function(){
+                    console.log('실패');
                 }
-                else if(data == 2){
-                    alert(username+" 초대가 완료되었습니다.");
-                    location.href = '/team/'+team_pk;
-                }
-                else{
-                    alert(username+"해당 사용자가 존재 하지 않습니다!")
-                }
-            },
-            error: function(){
-                console.log('실패');
-            }
-        })
+            })
+        }
+        else return;
     }
-    else return;
-}
-
-function team_time_add(team_pk){
-    var add_time_table = confirm("팀에 시간표를 추가하시겠습니까?")
-    if (add_time_table == true ){
-        $.ajax({
-            url: '/team/'+team_pk+'/'+'add_time_table',
-            success: function(data){
-                if (data > 0){
-                    alert("이미 추가된 시간표 입니다!")
+    
+    function team_time_add(team_pk){
+        var add_time_table = confirm("팀에 시간표를 추가하시겠습니까?")
+        if (add_time_table == true ){
+            $.ajax({
+                url: '/team/'+team_pk+'/'+'add_time_table',
+                success: function(data){
+                    if (data > 0){
+                        alert("이미 추가된 시간표 입니다!")
+                    }
+                    else if(data==0){
+                        alert("시간표가 성공적으로 추가 되었습니다")
+                        // location.href = '/team/'+team_pk;
+                        location.href = '/team/'+team_pk+'/'+'member_time_table';
+                    }
+                },
+                error: function(){
+                    console.log('실패');
                 }
-                else if(data==0){
-                    alert("시간표가 성공적으로 추가 되었습니다")
-                    // location.href = '/team/'+team_pk;
-                    location.href = '/team/'+team_pk+'/'+'member_time_table';
-                }
-            },
-            error: function(){
-                console.log('실패');
-            }
-        })
+            })
+        }
+        else return;
     }
-    else return;
-}
-function delete_team_timetable(team_pk){
-    var leave_team = confirm("팀에 추가된 시간표를 삭제하시겠습니까?")
-    if (leave_team == true){
-        $.ajax({
-            url: '/team/'+team_pk+'/delete_time_table',
-            success: function(data){
-                if (data ==2){
-                    alert("추가된 시간표가 존재하지 않습니다");
+    function delete_team_timetable(team_pk){
+        var leave_team = confirm("팀에 추가된 시간표를 삭제하시겠습니까?")
+        if (leave_team == true){
+            $.ajax({
+                url: '/team/'+team_pk+'/delete_time_table',
+                success: function(data){
+                    if (data ==2){
+                        alert("추가된 시간표가 존재하지 않습니다");
+                    }
+                    else if(data==1){
+                        alert("시간표가 성공적으로 삭제 되었습니다.");
+                        location.href = '/team/'+team_pk;
+                    }
+                },
+                error: function(){
+                    console.log('실패');
                 }
-                else if(data==1){
-                    alert("시간표가 성공적으로 삭제 되었습니다.");
-                    location.href = '/team/'+team_pk;
-                }
-            },
-            error: function(){
-                console.log('실패');
-            }
-        })
+            })
+        }
+        else return;
     }
-    else return;
-}
-</script>
-<table style="margin: auto; margin-bottom: 30px;">
-    <tr >
-        <td style="padding-left: 15px; padding-right: 15px;cursor: pointer; background-color: whitesmoke;"> <a href=" {% url 'account:user_home' login_user.pk %}" style="color: black;">home</a></td>
-        <td style="padding-left: 15px; padding-right: 15px;cursor: pointer; background-color: whitesmoke;"> <a onclick="team_invite('{{details.pk}}')"style="color: black;">팀원 추가</a></td>
-        <td style="padding-left: 15px; padding-right: 15px;cursor: pointer; background-color: whitesmoke;"> <a onclick="team_leave('{{details.pk}}', '{{login_user.pk}}')"style="color: black;">팀 탈퇴</a></td>
-        <td style="padding-left: 15px; padding-right: 15px;cursor: pointer; background-color: whitesmoke;"> <a onclick="team_time_add('{{ details.pk }}')"style="color: black;">내 시간표 추가</a></td>
-        <td style="padding-left: 15px; padding-right: 15px;cursor: pointer; background-color: whitesmoke;"> <a onclick="delete_team_timetable('{{ details.pk }}')"style="color: black;">내 시간표 삭제</a></td>
-        <td style="padding-left: 15px; padding-right: 15px;cursor: pointer; background-color: whitesmoke;"> <a href="{% url 'team:member_time_table' details.pk %}"style="color: black;">합친 팀 시간표</a></td>
-    </tr> 
-</table>
-
-<p><h1 style="text-align: center;">{{ details.team_name }}</h1></p>
-    <br>
-    <p><h3 style="text-align: center; color: black;">{{ details.introduce }}</h2></p>
-    <br>
-    <hr>
-        <div class="" style="margin: 0px 100px 100px 60px;">
-            <p></p>
-            <div class="btn-group btn-group-justified" role="group" aria-label="..." style="margin: 50px 25px;">
-                {% for i in team_member.all %}
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-default">{{ i.user.username }}</button>
+    </script>
+<ol class="breadcrumb page-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'account:user_home' user.pk %}"> Home </a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team:all_team_member' details.pk %}"> 전체 팀원 </a></li>
+    <li class="breadcrumb-item"><a onclick="team_invite('{{details.pk}}')"style="color: black;">팀원 추가</a></li>
+    <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
+</ol>
+<div class="subheader">
+    <h1 class="subheader-title">
+        <i class='subheader-icon fal fa-credit-card-front'></i> {{ details.team_name }}
+        <small>
+           {{details.introduce}}
+        </small>
+    </h1>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
+        <!-- profile summary -->
+        <div class="card mb-g rounded-top">
+            <div class="row no-gutters row-grid">
+                <div class="col-12">
+                    <div class="d-flex flex-column align-items-center justify-content-center p-4">
+                        <img src="{% static 'img/default.png' %}" class="rounded-circle shadow-2 img-thumbnail" alt="">
+                        <h5 class="mb-0 fw-700 text-center mt-3">
+                            {{user.username}}
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <a href="{% url 'account:user_home' user.pk %}">
+                    <div class="text-center py-3">
+                        <h5 class="mb-0 fw-700">
+                            내 정보
+                            <small class="text-muted mb-0">Connections</small>
+                        </h5>
+                    </div>
+                </a>
+                </div>
+                <div class="col-6">
+                    <a href="{% url 'account:user_team' user.pk %}">
+                    <div class="text-center py-3">
+                        <h5 class="mb-0 fw-700">
+                            My Team
+                            <small class="text-muted mb-0">Followers</small>
+                        </h5>
+                    </div>
+                </a>
+                </div>
+            </div>
+        </div>
+        <!-- photos -->
+        
+        <!-- contacts -->
+        <div class="card mb-g">
+            <div class="row row-grid no-gutters">
+                <div class="col-12">
+                    <div class="p-3">
+                        <h2 class="mb-0 fs-xl">
+                            팀원
+                        </h2>
+                    </div>
+                </div>
+                {% for member in team_member %}
+                <div class="col-4">
+                    <a  class="text-center p-3 d-flex flex-column hover-highlight">
+                        <span class="profile-image rounded-circle d-block m-auto" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
+                        <span class="d-block text-truncate text-muted fs-xs mt-1">{{ member.user.username }}</span>
+                    </a>
                 </div>
                 {% endfor %}
+                
+                
+                <!-- <div class="col-12">
+                    <div class="p-3 text-center">
+                        <a href="{% url 'team:all_team_member' details.pk %}" class="btn-link font-weight-bold">View all</a>
+                    </div>
+                </div> -->
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="bs-example" data-example-id="simple-jumbotron" style=" border: 1px solid rgb(238, 232, 232);">
-                    <div class="jumbotron" style="padding: 100px; background-color: #fff;">
-                      <h1 id="hello,-world!" style="text-align: center;">자료 공유<a class="anchorjs-link" href="#hello,-world!"><span class="anchorjs-icon"></span></a></h1>
-                      <p></p>
-                    <p style="text-align: center; margin-top: 30px;"><a class="btn btn-primary btn-lg" href="{% url 'team_article:workspace' details.pk user.pk %}" role="button">Go!</a></p>
+    </div>
+    <div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
+        <div class="card border mb-g">
+            <div class="card-body pl-4 pt-4 pr-4 pb-0">
+                <div class="d-flex flex-column">
+                    <div class="border-0 flex-1 position-relative shadow-top">
+                        <div class="pt-2 pb-1 pr-0 pl-0 rounded-0 position-relative" tabindex="-1">
+                            <span class="profile-image rounded-circle d-block position-absolute" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
+     
+                            <div class="pl-5 ml-5">
+                                <textarea class="form-control border-0 p-0 fs-xl" rows="4" placeholder="What's on your mind Codex?..."></textarea>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-            </div>
-            <div class="col-md-6">
-                <div class="bs-example" data-example-id="simple-jumbotron" style=" border: 1px solid rgb(238, 232, 232);">
-                    <div class="jumbotron" style="padding: 100px;background-color: #fff;">
-                        <h1 id="hello,-world!" style="text-align: center;">시간표<a class="anchorjs-link" href="#hello,-world!"><span class="anchorjs-icon"></span></a></h1>
-                        <p></p>
-                        <p style="text-align: center; margin-top: 30px;"><a class="btn btn-primary btn-lg" href="{% url 'team:member_time_table' details.pk %}" role="button">Go!</a></p>
+                    <div class="height-8 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
+                        <button class="btn btn-info shadow-0 ml-auto">Post</button>
                     </div>
-                  </div>   
+                </div>
             </div>
-
+        </div>   
+        <div class="card border mb-g">
+            <div class="msgr d-flex h-100 flex-column bg-white">
+                <!-- BEGIN custom-scroll -->
+                <div class="custom-scroll flex-1 h-100">
+                    <div id="chat_container" class="w-100 p-4">
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment">
+                            <div class="time-stamp text-center mb-2 fw-400">
+                                Jun 19
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment chat-segment-sent">
+                            <div class="chat-message">
+                                <p>
+                                    채팅
+                                </p>
+                            </div>
+                            <div class="text-right fw-300 text-muted mt-1 fs-xs">
+                                3:00 pm
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment chat-segment-get">
+                            <div class="chat-message">
+                                <p>
+                                    안녕
+                                </p>
+                                <p>
+                                    채팅을 만들어보겠습니다
+                                </p>
+                                <p>
+                                    
+                                </p>
+                            </div>
+                            <div class="fw-300 text-muted mt-1 fs-xs">
+                                3:24 pm
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment chat-segment-sent chat-start">
+                            <div class="chat-message">
+                                <p>
+                                    맞아
+                                </p>
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment chat-segment-sent chat-end">
+                            <div class="chat-message">
+                                <p>
+                                    채팅 만들어야지
+                                </p>
+                            </div>
+                            <div class="text-right fw-300 text-muted mt-1 fs-xs">
+                                3:26 pm
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment chat-segment-get chat-start">
+                            <div class="chat-message">
+                                <p>
+                                    오우
+                                </p>
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment chat-segment-get">
+                            <div class="chat-message">
+                                <p>
+                                    언제 만들지
+                                </p>
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment -->
+                        <div class="chat-segment chat-segment-get chat-end">
+                            <div class="chat-message">
+                                <p>
+                                    개 어렵네
+                                </p>
+                            </div>
+                        </div>
+                        <!--  end .chat-segment -->
+                        <!-- start .chat-segment for timestamp -->
+                        <div class="chat-segment">
+                            <div class="time-stamp text-center mb-2 fw-400">
+                                Jun 20
+                            </div>
+                        </div>
+                        <!--  end .chat-segment for timestamp -->
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
+        <!-- add : -->
+        <div class="card mb-g">
+            <div class="row row-grid no-gutters">
+                <div class="col-12">
+                    <div class="p-3">
+                        <h2 class="mb-0 fs-xl">
+                            Team Project
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="p-3">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <a href="{% url 'team:member_time_table' details.pk%}" class="d-flex flex-row align-items-center">
+                                    <div class='icon-stack display-3 flex-shrink-0'>
+                                        <i class="fal fa-circle icon-stack-3x opacity-100 color-primary-400"></i>
+                                        <i class="fas fa-graduation-cap icon-stack-1x opacity-100 color-primary-500"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <strong>
+                                            팀 시간표
+                                        </strong>
+                                        <br>
+                                        내 시간표를 등록하고 합쳐진 시간표를 확인하세요!
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="p-3">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <a href="{% url 'team_article:workspace' details.pk user.pk %}" class="d-flex flex-row align-items-center">
+                                    <div class='icon-stack display-3 flex-shrink-0'>
+                                        <i class="fal fa-circle icon-stack-3x opacity-100 color-warning-400"></i>
+                                        <i class="fas fa-graduation-cap icon-stack-1x opacity-100 color-warning-400"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <strong>
+                                            팀 자료공유
+                                        </strong>
+                                        <br>
+                                        조사한 자료들을 올려 팀원들과 공유해 주세요!
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="p-3">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <a href="javascript:void(0);" class="d-flex flex-row align-items-center">
+                                    <div class='icon-stack display-3 flex-shrink-0'>
+                                        <i class="fal fa-circle icon-stack-3x opacity-100 color-info-400"></i>
+                                        <i class="fas fa-graduation-cap icon-stack-1x opacity-100 color-info-400"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <strong>
+                                            중간 위치 찾기!
+                                        </strong>
+                                        <br>
+                                        Adding qualifications will help gain more clients
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
 {% endblock %}

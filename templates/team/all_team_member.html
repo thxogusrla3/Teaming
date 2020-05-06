@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<script>
+function team_invite(team_pk){
+        var username = prompt("초대할 사용자를 입력해 주세요!")
+        if (username != null){
+            $.ajax({
+                type:'get',
+                url: "/team/"+team_pk+'/add_member1?username='+username,
+                success: function(data){
+                    if(data == 1){
+                        alert(username+"해당 사용자가 팀에 존재합니다!");
+                    }
+                    else if(data == 2){
+                        alert(username+" 초대가 완료되었습니다.");
+                        location.href = '/team/'+team_pk;
+                    }
+                    else{
+                        alert(username+"해당 사용자가 존재 하지 않습니다!")
+                    }
+                },
+                error: function(){
+                    console.log('실패');
+                }
+            })
+        }
+        else return;
+    }
+</script>
+<ol class="breadcrumb page-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
+    <li class="breadcrumb-item"><a onclick="team_invite('{{details.pk}}')"style="color: black;">팀원 추가</a></li>
+        <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
+    </ol>
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon fal fa-plus-circle'></i>{{team.team_name}}
+            <small>
+                전체 팀원들의 정보들입니다.
+            </small>
+        </h1>
+    </div>
+    
+    <div class="row" id="js-contacts">
+        {% for team_user in user_team.all %}
+        <div class="col-xl-4">
+            <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
+                <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
+                    <div class="d-flex flex-row align-items-center">
+                        <span class="status status-success mr-3">
+                            <span class="rounded-circle profile-image d-block " style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
+                        </span>
+                        <div class="info-card-text flex-1">
+                            <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
+                                {{team_user.user.last_name}}{{team_user.user.first_name}} 
+                                <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
+                            </a>
+
+                            <span class="text-truncate text-truncate-xl">정보통신공학과</span> //유저에 학번 추가하기
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="card-body p-0 collapse show">
+                    <div class="p-3">
+                        <a href="" class="mt-1 d-block fs-sm fw-400 text-dark">
+                            <i class="fas fa-mobile-alt text-muted mr-2"></i> {{team_user.user.phone_number}}//학번추가하기</a> 
+                        <a href="" class="mt-1 d-block fs-sm fw-400 text-dark">
+                            <i class="fas fa-mouse-pointer text-muted mr-2"></i> {{team_user.user.email}}</a>
+                        
+                        <div class="d-flex flex-row">
+                            <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#3b5998">
+                                <i class="fab fa-facebook-square"></i>
+                            </a>
+                            <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#38A1F3">
+                                <i class="fab fa-twitter-square"></i>
+                            </a>
+                            <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#0077B5">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

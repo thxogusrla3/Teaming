@@ -12,4 +12,8 @@ urlpatterns = [
     path('<int:team_pk>/add_member1', views.add_member1, name='add_member1'),
     path('<int:team_pk>/delete_time_table', views.delete_time_table, name='delete_time_table'),
     path('<int:team_pk>/member_time_table', views.team_user_timetable, name='member_time_table'),
+    path('team_meeting_place/', views.team_meeting_place, name='team_meeting_place'),
+    path('blank', views.blank_html, name='blank'),
+    path('<int:team_pk>/all_team_member', views.all_team_member, name="all_team_member"),
+    
 ]

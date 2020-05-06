@@ -130,7 +130,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static2')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')#스태틱 파일을 쓰기위해서 루트햇어요
 
 # Media files

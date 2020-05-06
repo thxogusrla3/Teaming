@@ -1,91 +1,191 @@
 {% extends 'layout.html' %}
 {% block content %}
-<style>
-.inner-block {
-    padding: 6em 2em 4em 2em;
-    background: #fafafa;
-}
-#td_a{
-    color: black;
-}
-</style>
-<div class="col-md-12">
-<table style="margin-bottom: 30px;">
-<tr>
-    {% for members in user_team.all %}
-    <td style="padding-left: 10px; padding-right: 15px;" id="td_a"><a href="{% url 'team_article:workspace' members.team.pk members.user.pk %}" style="color: black; font-size: 15px;">{{ members.user.username }}의 작업공간</a></td>
-    {% endfor %}
-    <td><a href="{% url 'team:detail_team' team.pk %}" style="color: rgb(0, 0, 0);">Team Home</a></td>
-</tr>
-</table>  
-        <div class="col-md-6" style="padding:15px; margin-bottom: 20px;background-color:white; border: 1px solid rgb(238, 232, 232); overflow: hidden;
-        height: auto;">
-            <form action="{% url 'team_article:articleurl' team.pk user.pk %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                        <label for="{{ urlform.url.id_for_label }}">주소</label>
-                        {{ urlform.url }}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ urlform.explain_content.id_for_label }}">주소 설명</label>
-                        {{ urlform.explain_content }}
-                    </div>
-                    <div class="forgot-top-grids">
-                        <div class="clearfix"> </div>
-                    </div>
-                    <input type="submit" name="Sign In" value="저장">	
-            </form>
-        </div>
-        <div class="col-md-6" style="padding:15px; margin-bottom: 20px;background-color: white; border: 1px solid rgb(238, 232, 232); ">
-                <form action="{% url 'team_article:articlefile' team.pk user.pk %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group">
-                            <label for="{{ fileform.file_url.id_for_label }}">파일</label>
-                            {{ fileform.file_url }}
-                        </div>
-                        <div class="form-group">
-                            <label for="{{ fileform.explain_content.id_for_label }}">파일 설명</label>
-                            {{ fileform.explain_content }}
-                        </div>
-                        <div class="forgot-top-grids">
-            
-            
-                            <div class="clearfix"> </div>
-                        </div>
-                        <input type="submit" name="Sign In" value="저장">	
-                </form>
-            </div>
-    </div>
-<br>
 
-<div class="col-md-12" style="margin: 20px; border: 1px solid rgb(238, 232, 232); overflow: hidden; height: auto;">
-    <div class="col-md-6" style="padding: 15px; word-break:break-all;">
-        <h1>주소 게시판</h1>
-        <hr>
-            {% for i in search_url.all %}
-            주소: <a href="{{ i.url }}" target="_blank">{{ i.url }}</a><br>
-            설명:{{ i.explain_content}}
-            <br>
-            {{i.created_date }}
-            {% if user.id == now_user.id %}
-            <a href="{% url 'team_article:delete_articleurl' team.pk user.pk i.pk %}">삭제</a>
-            {% endif %}
-            <br><br><br>
-            {% endfor %}
+
+<ol class="breadcrumb page-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team:member_time_table' team.pk %}">팀 시간표</a></li>
+    <li class="breadcrumb-item"><a href="javascript:void(0);">모임 장소</a></li>
+</ol>
+
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon fal fa-credit-card-front'></i> 저장 및 공유
+            <small>
+                당신의 자료들을 보관, 공유해주세요!
+            </small>
+        </h1>
     </div>
-    <div class="col-md-6 "style="padding: 15px;">
-        <h1>파일 게시판</h1>
-        <hr>
-        {% for i in search_file.all %}
-        <br>
-        <a href="{{ i.file_url.url }}" download>{{ i.file_url }}</a>
-        {% if user.id == now_user.id %}
-        <a href="{% url 'team_article:delete_articlefile' team.pk user.pk i.pk %}">삭제</a>
-        {% endif %}
-        <br>
-        설명: {{i.explain_content}}
-        <br>
-        {% endfor %}
+    
+    <div class="row">
+        <div class="col-xl-6">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        주소 <span class="fw-300"><i>inputs</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                    </div>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="panel-tag">
+                            찾은 주소를 입력하고 자료에 대한 설명을 쓰고 저장하면 밑에 자료들이 쌓입니다!
+                        </div>
+                        <form action="{% url 'team_article:articleurl' team.pk user.pk %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                    <label for="{{ urlform.url.id_for_label }}">주소</label>
+                                    {{ urlform.url }}
+                            </div>
+                           
+                            <div class="form-group">
+                                <!-- <label class="form-label" for="example-textarea">Text area</label>
+                                <textarea class="form-control" id="example-textarea" rows="3"></textarea> -->
+                            <label for="{{ urlform.explain_content.id_for_label }}">주소 설명</label>
+                        {{ urlform.explain_content }}
+                            </div>
+                            <div class="panel-toolbar">
+                                <button type="submit" class="btn btn-default btn-pills">저장</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        파일 <span class="fw-300"><i>inputs</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                    </div>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="panel-tag">
+                            업로드할 파일을 올리고 저장을 눌러주세요!    
+                        </div>
+                        <form action="{% url 'team_article:articlefile' team.pk user.pk %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                    <label class="form-label">File (Browser)</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file_url" name="file_url">
+                                    <label class="custom-file-label" for="{{ fileform.file_url.id_for_label }}">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ fileform.explain_content.id_for_label }}">파일 설명</label>
+                                {{ fileform.explain_content }}
+                            </div>
+                            <div class="panel-toolbar">
+                                <button type="submit" class="btn btn-default btn-pills">저장</button>                   
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        {{now_user.username}} <span class="fw-300"><i>님의 자료실입니다</i></span>
+                    </h2>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{user.username}}
+                        </button>
+                        <div class="dropdown-menu">
+                            {% for members in member %}
+                            <a class="dropdown-item" href="{% url 'team_article:workspace' members.team.pk members.user.pk %}" sec>{{members.user.username}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-6 .col-sm-6">
+                    <div class="panel-hdr">
+                        <h2 data-filter-tags="hover background">
+                            
+                             <span class="fw-300"><i>저장한 주소들의 정보입니다!</i></span>
+                        </h2>
+                        
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <div class="panel-tag">
+                                클릭시 해당 주소로 페이지가 이동합니다! //한 페이지당 9개만
+                            </div>
+                            <div class="row">
+                                    {% for i in search_url.all %}
+                                <div class="col-sm-6 col-md-6 col-xl-4">
+                                    <div class="rounded mb-g border border-faded  color-fusion-300">
+                                        <div class="p-3 rounded">
+                                            <strong>주소</strong>
+                                            <p>
+                                                <a href="{{ i.url }}" target="_blank">{{ i.summary }}...</a>
+                                            </p>
+                                            <strong>설명</strong>
+                                            <p>
+                                                    {{ i.explain_content}}
+                                            </p>                                            <p>
+                                                    {{i.created_date }}
+                                            </p>
+                                            {% if user.id == now_user.id %}
+                                            <a href="{% url 'team_article:delete_articleurl' team.pk user.pk i.pk %}">삭제</a>
+                                            {% endif %}                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="panel-5" class="col-6 .col-sm-6">
+                    <div class="panel-hdr">
+                        <h2 data-filter-tags="hover background">
+                            <span class="fw-300"><i>저장한 파일 목록입니다!</i></span>
+                        </h2>
+                        
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <div class="panel-tag">
+                                클릭시 해당 파일이 다운로드 됩니다!
+                            </div>
+                            <div class="row">
+                                    {% for i in search_file.all %}
+                                <div class="col-sm-6 col-md-6 col-xl-4">
+                                        <div class="rounded mb-g border border-faded  color-fusion-300">
+                                        <div class="p-3 rounded">
+                                            <strong>파일이름</strong>
+                                            <p>
+                                                <a href="{{ i.file_url.url }}" download>{{i.summary}}</a>
+                                            </p>
+                                            <strong>설명</strong>
+                                            <p>
+                                                    {{i.explain_content}}
+                                            </p>
+                                            <p>
+                                                {{i.created_date}}
+                                            </p>
+                                            {% if user.id == now_user.id %}
+                                            <a href="{% url 'team_article:delete_articlefile' team.pk user.pk i.pk %}">삭제</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                               </div>
+                               {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
-</div>
-{% endblock%}
+{% endblock %}

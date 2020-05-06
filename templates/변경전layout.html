@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Teample</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Shoppy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all">
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
+    <!-- Custom Theme files -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <!--js-->
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+    <!--icons-css-->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <!--Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,500,600' rel='stylesheet' type='text/css'>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+
+    <!--//skycons-icons-->
+    {#    프로젝트 css#}
+    <link rel="stylesheet" href="{% static 'account/sign_in.css' %}">
+    <link rel="stylesheet" href="{% static 'account/sign_up.css' %}">
+</head>
+<body>
+<div class="page-container">
+    <div class="left-content">
+        <div class="mother-grid-inner">
+            <!--header start here-->
+            <div class="header-main" style="background: #f5f5f5;">
+                <div class="header-left">
+                    <div class="logo-name">
+                        <a href="{% url 'account:user_home' user.pk %}"> <h1>Teample</h1>
+                            <!--<img id="logo" src="" alt="Logo"/>-->
+                        </a>
+                    </div>
+                    <!--search-box-->
+                   
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="header-right">
+                    
+                    <!--notification menu end -->
+                    <div class="profile_details">
+                        <ul>
+                            <li class="dropdown profile_details_drop">
+                                {% if user.is_active %}
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <div class="profile_img">
+                                            <div class="user-name">
+                                                <p>{{ user.username }} 님</p>
+                                                <span>환영합니다!</span>
+                                            </div>
+                                            <i class="fa fa-angle-down lnr"></i>
+                                            <i class="fa fa-angle-up lnr"></i>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu drp-mnu">
+                                        <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>
+                                        <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li>
+                                        <li> <a href="{% url 'account:sign_out' %}"><i class="fa fa-sign-out"></i>로그아웃</a></li>
+                                    </ul>
+                                {% else %}
+                                    <div class="profile_img">
+                                        <div class="user-name">
+                                            {
+                                            <h4><p><i class="fa fa-sign-out"></i><a href="{% url 'account:sign_in' %}"> 로그인</a></p></h4>
+                                            <h4><p><i class="fa fa-user"></i><a href="{% url 'account:sign_up' %}"> 회원가입</a></p></h4>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <!--heder end here-->
+            <!-- script-for sticky-nav -->
+            <script>
+                $(document).ready(function() {
+                    var navoffeset=$(".header-main").offset().top;
+                    $(window).scroll(function(){
+                        var scrollpos=$(window).scrollTop();
+                        if(scrollpos >=navoffeset){
+                            $(".header-main").addClass("fixed");
+                        }else{
+                            $(".header-main").removeClass("fixed");
+                        }
+                    });
+
+                });
+            </script>
+            <!-- /script-for sticky-nav -->
+            <!--inner block start here-->
+            <div class="inner-block" style="background: #ffffff; overflow:hidden; height:auto;">
+                <div class="blank" style="overflow:hidden; height:auto;">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+            <!--inner block end here-->
+            <!--copy rights start here-->
+
+            <!--COPY rights end here-->
+        </div>
+        <div class="copyrights">
+                <p>© 2019 정보통신공학과 캡스톤 </p>
+           </div>	
+    </div>
+    <!--slider menu-->
+    <div class="sidebar-menu" style="background-color: #4e5050; " >
+
+        <div class="menu">
+            <ul id="menu" >
+                <li id="menu-home" ><a href="{% url 'account:user_home' user.pk %}" ><i class="glyphicon glyphicon-home" aria-hidden="true" style="color: white;"></i><span>home</span></a></li>
+                <li><a href="{% url 'account:set_schedule' %}"><i class="glyphicon glyphicon-list-alt" aria-hidden="true" style="color: white;"></i><span>내 시간표</span></a></li>
+                <li><a href="{% url 'team:create_team' %}"><i class="glyphicon glyphicon-plus" aria-hidden="true" style="color: white;"></i><span>Create Team!</span></a></li>
+                
+                
+                {% if user.is_active %}
+                <li><a href="{% url 'mail:mailbox' user.id %}"><i class="fa fa-envelope"></i><span>Mailbox</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                    <ul id="menu-academico-sub" >
+                    </ul>
+                </li>
+                {% endif %}
+                
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+<!--slide bar menu end here-->
+<script>
+    var toggle = true;
+
+    $(".sidebar-icon").click(function() {
+        if (toggle)
+        {
+            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+            $("#menu span").css({"position":"absolute"});
+        }
+        else
+        {
+            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+            setTimeout(function() {
+                $("#menu span").css({"position":"relative"});
+            }, 400);
+        }
+        toggle = !toggle;
+    });
+</script>
+<!--scrolling js-->
+<script src="{% static 'js/jquery.nicescroll.js' %}"></script>
+<script src="{% static 'js/scripts.js' %}"></script>
+<!--//scrolling js-->
+<script src="{% static 'js/bootstrap.js' %}"> </script>
+<!-- mother grid end here-->
+</body>
+</html>
+
+
+                      
+						

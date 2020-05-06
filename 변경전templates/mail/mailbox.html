@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% if mails %}
+<h2>{{ user.username }}의 메일함입니다.</h2>
+<h3>메일 개수: {{ user.to_users.all.count }}개</h3> <hr/>
+<div class="mailbox_button">
+    <a href="{% url 'mail:send_mail' user.pk %}"><button type="button" class="btn btn-success">메일쓰기</button></a>
+</div>
+        <table border=1 class="table table-bordered" style="text-align: center">
+            <thead>
+            <tr>
+                <th scope="col" style="width: 5%;">글 번호</th>
+                <th scope="col" style="width: 20%;">날짜</th>
+                <th scope="col" style="width: 20%;">보낸사람</th>
+                <th scope="col" style="width: 30%;">내용</th>
+                <th scope="col" style="width: 5%;">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mail in user.to_users.all %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ mail.created_date }}</td>
+                    <td>{{ mail.from_user.username }}</td>
+                    <td>{{ mail.content | truncatechars:30 }}&nbsp;<a href="{% url 'mail:detail_mail' mail.pk %}">자세히...</a></td>
+                    <td><a href="{% url 'mail:delete_mail' mail.pk %}"><button type="button" class="btn btn-danger">삭제</button></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% endblock %}

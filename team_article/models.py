@@ -1,7 +1,14 @@
 from django.db import models
 from team.models import Team
 from account.models import User
+import os
 
+def article_file_name(fileUrl):
+    a = 0
+    for i in range(len(fileUrl)):
+        if fileUrl[i] == '/':
+            a = i
+    return a
 
 # Create your models here.
 def article_file_path(instance, filename):
@@ -28,10 +35,13 @@ class ArticleFile(models.Model):
     explain_content = models.CharField(max_length=300)
     created_date = models.DateTimeField(auto_now_add=True, editable=False)
     modified_date = models.DateTimeField(auto_now=True)
+
+    def summary(self):
+        return self.file_url.name[article_file_name(self.file_url.name)+1:]
     
     def __str__(self):
         return self.explain_content
-
+    
 class ArticleUrl(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -43,7 +53,9 @@ class ArticleUrl(models.Model):
     def __str__(self):
         return self.explain_content
 
-
+    def summary(self):
+        return self.url[0:25]
+    
 class CommentUrl(models.Model):
     articleurl = models.ForeignKey(ArticleUrl, on_delete=models.CASCADE)
     post_user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -48,16 +48,18 @@ def get_time_table(team_id):
 @login_required
 def detail_team(request, team_id):
    details = get_object_or_404(Team, pk=team_id)
-   login_user = request.user
-   user_team = TeamMember.objects.filter(user=login_user)
+   user = request.user
+   user_team = TeamMember.objects.filter(user=user)
    team_member = TeamMember.objects.filter(team=details)
    team_time_table = TeamTimeTable.objects.filter(team=details)
    for i in TeamMember.objects.filter(team__pk=details.pk):
-      if i.user.pk == login_user.pk:         
+      if i.user.pk == user.pk:         
          return render(request, 'team/detail_team.html',{
-             'details': details, 'team_member':team_member,
-             'login_user':login_user, 'user_team':user_team,
-             'team_time_table':team_time_table
+             'details': details, 
+             'team_member':team_member,
+             'user':user, 
+             'user_team':user_team,
+                     
              })
    
    return redirect('account:user_home', login_user.pk)
@@ -179,25 +181,6 @@ def edit_team(request, team_pk):
    else:
       teamform = TeamForm(instance=team)
       return render(request, 'team/create_team.html', {'teamform':teamform})
-
-# def add_time_table(request, team_pk):
-
-#     team = get_object_or_404(Team, pk=team_pk)
-#     user = request.user
-#     if TeamTimeTable.objects.filter(team=team, user=user).count() >= 1:
-#         return 1
-#     ttt = TeamTimeTable(team=team, user=user, total_time_table=user.time_table)
-#     ttt.save()
-#     return 2
-
-# def add_time_table(request, team_pk):
-#     team = get_object_or_404(Team, pk=team_pk)
-#     user = request.user
-#     if TeamTimeTable.objects.filter(team=team, user=user).count() >= 1:
-#         return ValueError
-#     ttt = TeamTimeTable(team=team, user=user, total_time_table=user.time_table)
-#     ttt.save()
-#     return redirect('team:detail_team', team_pk)
     
 def add_time_table(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
@@ -230,3 +213,14 @@ def team_user_timetable(request, team_pk):
     member_time_table = TeamTimeTable.objects.filter(team=team)
     user = request.user
     return render(request, "team/teamtimetable.html",{'user_team':member_time_table, 'user':user, 'team':team})
+
+def team_meeting_place(request):
+    return render(request, "team/team_meeting_place.html")
+
+def blank_html(request):
+    return render(request, "blank.html")
+
+def all_team_member(request, team_pk):
+    team = get_object_or_404(Team, pk=team_pk)
+    user_team = TeamMember.objects.filter(team=team)
+    return render(request, "team/all_team_member.html", {'user_team':user_team, 'team':team})

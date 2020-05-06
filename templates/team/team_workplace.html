@@ -1,0 +1,177 @@
+{% extends 'layout.html' %}
+{% block content %}
+<ol class="breadcrumb page-breadcrumb">
+    <li class="breadcrumb-item"><a href="javascript:void(0);">Team Home</a></li>
+    <li class="breadcrumb-item"><a href="javascript:void(0);">팀 시간표</a></li>
+</ol>
+
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon fal fa-credit-card-front'></i> 저장 및 공유
+            <small>
+                당신의 자료들을 보관, 공유해주세요!
+            </small>
+        </h1>
+    </div>
+    
+    <div class="row">
+        <div class="col-xl-6">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        주소 <span class="fw-300"><i>inputs</i></span>
+                    </h2>
+                    
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="panel-tag">
+                            찾은 주소를 입력하고 자료에 대한 설명을 쓰고 저장하면 밑에 자료들이 쌓입니다!
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label" for="simpleinput">Text</label>
+                                <input type="text" id="simpleinput" class="form-control">
+                            </div>
+                           
+                            <div class="form-group">
+                                <label class="form-label" for="example-textarea">Text area</label>
+                                <textarea class="form-control" id="example-textarea" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        파일 <span class="fw-300"><i>inputs</i></span>
+                    </h2>
+                    
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="panel-tag">
+                            업로드할 파일을 올리고 저장을 눌러주세요!    
+                        </div>
+                        <form>
+                                <div class="form-group">
+                                        <label class="form-label">File (Browser)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                <label class="form-label" for="example-textarea">Text area</label>
+                                <textarea class="form-control" id="example-textarea" rows="3"></textarea>
+                            </div>
+                           
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        사용자 이름 <span class="fw-300"><i></i></span>
+                    </h2>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            사용자 이름
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">김태현</a>
+                            <a class="dropdown-item" href="#">최호준</a>
+                            <a class="dropdown-item" href="#">이정태</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-6 .col-sm-6">
+                    <div class="panel-hdr">
+                        <h2 data-filter-tags="hover background">
+                            
+                             <span class="fw-300"><i>저장한 주소들의 정보입니다!</i></span>
+                        </h2>
+                        
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <div class="panel-tag">
+                                클릭시 해당 주소로 페이지가 이동합니다! //한 페이지당 9개만
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-xl-4">
+                                    <div class="rounded mb-g border border-faded bg-primary-500 color-fusion-300">
+                                        <div class="p-3 hover-bg rounded">
+                                            <strong>주소</strong>
+                                            <p>
+                                                Www.naver.com
+                                            </p>
+                                            <strong>설명</strong>
+                                            <p>
+                                                이 주소는 네이버에 관한 주소입니다!
+                                            </p>
+                                            <strong>시간</strong>
+                                            <p>
+                                                2020.04.15
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="panel-5" class="col-6 .col-sm-6">
+                    <div class="panel-hdr">
+                        <h2 data-filter-tags="hover background">
+                            <span class="fw-300"><i>저장한 파일 목록입니다!</i></span>
+                        </h2>
+                        <div class="panel-toolbar">
+                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                            <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                        </div>
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <div class="panel-tag">
+                                클릭시 해당 파일이 다운로드 됩니다!
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-xl-4">
+                                    <div class="rounded mb-g border border-faded bg-primary-500 color-fusion-300">
+                                            <div class="p-3 hover-bg rounded">
+                                                    <strong>주소</strong>
+                                                    <p>
+                                                        Www.naver.com
+                                                    </p>
+                                                    <strong>설명</strong>
+                                                    <p>
+                                                        이 주소는 네이버에 관한 주소입니다!
+                                                    </p>
+                                                    <strong>시간</strong>
+                                                    <p>
+                                                        2020.04.15
+                                                    </p>
+                                                </div>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

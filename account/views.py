@@ -4,9 +4,7 @@ from .forms import *
 from .models import User
 from team.models import TeamMember
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
-
+from django.utils import timezone
 
 # 회원가입
 def sign_up(request):
@@ -17,7 +15,7 @@ def sign_up(request):
             form.save()
             auth.login(request, User.objects.get(username=form.cleaned_data['username']))
             user = request.user
-            return redirect('account:set_schedule')
+            return redirect('account:user_home', user.pk)
         # 폼이 검증이 안되면 22번째 줄로 넘어가 에러메세지를 포함한 폼을 보내 템플릿을 렌더링함
     # request가 get이면 빈폼을 생성하고 22번째로 넘어가 템플릿 렌더링
     else:
@@ -38,7 +36,7 @@ def sign_in(request):
             # user가 존재하면 로그인을 하고 메인화면으로 넘어감(메인이 구현안되있어 로그인으로 넘어가게 수정함)
             if user:
                 auth.login(request, user)
-                return redirect('account:set_schedule')
+                return redirect('account:user_home', user.pk)
             # 만약 존재하지 않으면 form에 에러메세지를 추가하고 46번째 줄로넘어가 템플릿을 렌더링함
             else:
                 form.add_error(None, '아이디 또는 비밀번호가 올바르지 않습니다.')
@@ -53,7 +51,8 @@ def user_home(request, user_pk):
     if user.id == user_pk:
         user = get_object_or_404(User, pk=user_pk)
         user_team = TeamMember.objects.filter(user=user) #팀의 목록을 출력해줄것임!
-        return render(request, 'account/user_home.html', {'user':user, 'user_team':user_team})
+        form = ScheduleForm(instance=request.user)
+        return render(request, 'account/user_home.html', {'user':user, 'user_team':user_team, 'form':form})
     
     else: # 현재사용자가 다른 사용자의 홈을 들어갈경우 로그인창으로 돌아가게 함
         return redirect('account:sign_in')
@@ -97,5 +96,8 @@ def set_schedule(request):
         return redirect("account:user_home", user.pk)
     else:
         form = ScheduleForm(instance=request.user)
-    return render(request, "account/schedule.html", {'form': form, 'user_team':user_team})
   
+def user_team(request, user_pk):
+    user = get_object_or_404(User, pk=user_pk)
+    user_team = TeamMember.objects.filter(user=user)
+    return render(request, 'account/user_team.html',{'user_team':user_team, 'user':user})

@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<script type="text/javascript">
+    function team_leave(team_pk, user_pk){
+        var leave_team = confirm("팀을 나가시겠습니까?")
+        if (leave_team == true){
+            location.href = '/team/'+team_pk+'/'+user_pk+'/'+'leave_team';
+        }
+        else
+            return ;
+    }
+</script>
+<ol class="breadcrumb page-breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0);">SmartAdmin</a></li>
+        <li class="breadcrumb-item">Page Views</li>
+        <li class="breadcrumb-item active">Contacts</li>
+        <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
+    </ol>
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon fal fa-plus-circle'></i> {{user.username}}의 팀 목록입니다
+            
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="border-faded bg-faded p-3 mb-g d-flex">
+                <input type="text" id="js-filter-contacts" name="filter-contacts" class="form-control shadow-inset-2 form-control-lg" placeholder="Filter contacts">
+                <div class="btn-group btn-group-lg btn-group-toggle hidden-lg-down ml-3" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" name="contactview" id="grid" checked="" value="grid"><i class="fas fa-table"></i>
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="contactview" id="table" value="table"><i class="fas fa-th-list"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="js-contacts">
+        {% for user_team in user_team %}
+        <div class="col-xl-4">
+            <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
+                
+                <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
+                    <div class="d-flex flex-row align-items-center">
+                        
+                        <div class="info-card-text flex-1">
+                            <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
+                                {{user_team.team.team_name}}
+                                <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')">팀 나가기</a>
+                                <a class="dropdown-item" href="#">팀 시간표</a>
+                                <a class="dropdown-item" href="{% url 'team:detail_team' user_team.team.pk %}">팀 </a>
+                            </div>
+                            <span class="text-truncate text-truncate-xl">{{user_team.team.team_leader.username}}</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="card-body p-0 collapse show">
+                    <div class="p-3">
+                            <a onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')" class="mt-1 d-block fs-sm fw-400 text-dark">
+                                    <i class="fas fa-mobile-alt text-muted mr-2"></i>팀 탈퇴</a>
+                                <a href="{% url 'team:member_time_table' user_team.team.pk%}" class="mt-1 d-block fs-sm fw-400 text-dark">
+                                    <i class="fas fa-mouse-pointer text-muted mr-2"></i> 팀 시간표</a>
+                                <address class="fs-sm fw-400 mt-4 text-muted">
+                                    <i class="fas fa-map-pin mr-2"></i> 798 Smyth Rd, Detroit, MI, 48341, USA</address>
+                                    {{ user_team.team.introduce }}
+
+                                <div class="d-flex flex-row">
+                                    <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#3b5998">
+                                        <i class="fab fa-facebook-square"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#38A1F3">
+                                        <i class="fab fa-twitter-square"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#0077B5">
+                                        <i class="fab fa-linkedin"></i>
+                                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
