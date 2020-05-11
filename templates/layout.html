@@ -33,7 +33,9 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         <link rel="stylesheet" media="screen, print" href="{% static 'css/formplugins/summernote/summernote.css' %}">
         <style type="text/css">
             a { color: black; text-decoration: none;}
-            </style>
+        </style>
+        {% block all_style %}
+        {% endblock %}
     </head>
     <body class="mod-bg-1 ">
         <!-- DOC: script to save and load page settings -->
