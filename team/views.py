@@ -224,3 +224,7 @@ def all_team_member(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
     user_team = TeamMember.objects.filter(team=team)
     return render(request, "team/all_team_member.html", {'user_team':user_team, 'team':team})
+
+def team_chat(request, team_pk):
+    user = request.user
+    

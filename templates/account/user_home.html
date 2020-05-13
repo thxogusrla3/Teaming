@@ -162,19 +162,20 @@
             <div id="panel-9" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        {{user.username}} 팀 목록 
+                        {{user.username}}님의 팀 목록 
                     </h2>
                     
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-                        
                         <div class="row">
-                                {% for userteam in user_team %}
-                                
+                            {% if count != 0 %}
+                            {% for userteam in user_team %}
+                            
                             <div class="col-xl-3">
                                 <a href="{% url 'team:detail_team' userteam.team.id %}">
                                 <div class="card border mb-4 mb-xl-3">
+                                    
                                     <!-- notice the additions of utility paddings and display properties on .card-header -->
                                     <div class="card-header bg-trans-gradient py-2 pr-2 d-flex align-items-center flex-wrap">
                                         <!-- we wrap header title inside a span tag with utility padding -->
@@ -188,6 +189,19 @@
                                 </a>
                             </div>
                             {% endfor %}
+                            {% else %}
+                            <div class="col-xl-12" style="text-align: center;">
+                                <a href="{% url 'team:create_team' %}" >
+                                <h1 class=" color-fusion-500">
+                                    팀이 없습니다!
+                                    <small class="fw-500">
+                                        팀을 추가해주세요 
+                                    </small>
+                                </h1>
+                                </a>
+                            </div>    
+                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>

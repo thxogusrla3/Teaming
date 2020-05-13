@@ -1,13 +1,13 @@
 from django.db import models
 from account.models import User
 
-
 # Create your models here.
 class Team(models.Model):
     """
     invitation_code 초대코드를 primary_key로 할까 고민중
     또 어떤 방식으로 생성해야할지 고민중
     """
+    # teamChat = models.ForeignKey(TeamChat, on_delete=models.CASCADE)
     team_leader = models.ManyToManyField(User, related_name="leader")
     team_name = models.CharField(blank=False, max_length=20)
     introduce = models.CharField(max_length=200)
@@ -20,7 +20,6 @@ class Team(models.Model):
     def __str__(self):
         return self.team_name
 
-
 class TeamMember(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -31,6 +30,7 @@ class TeamMember(models.Model):
             self.team.id ,
             self.user.username,
             )
+
 class TeamTimeTable(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -39,5 +39,9 @@ class TeamTimeTable(models.Model):
     def __str__(self):
         return self.total_time_table
         
-# class TeamLeader(models.Model):
-#     team_leder = models.OneToOneField(TeamMember, on_delete=models.SET_NULL, null=True)
+class TeamChat(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    message = models.CharField(max_length=300)
+    send_message = models.DateTimeField(auto_now_add=True, editable=False)
+

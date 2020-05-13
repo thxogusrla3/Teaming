@@ -4,10 +4,7 @@ from .models import User
 
 class SignUpForm(forms.ModelForm):
     # password = forms.CharField(required=True)
-    check_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                       'placeholder': 'Again Password'}),
-                                     required=True,
-                                     label='비밀번호 확인')
+    check_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Again Password'}),required=True,label='비밀번호 확인')
     class Meta:
         model = User
         fields = ['username',
@@ -15,27 +12,19 @@ class SignUpForm(forms.ModelForm):
                   'email',
                   'phone_number',
                   'first_name',
-                  'last_name'
+                  'last_name',
+                  'department',
+                  'student_id'
                   ]
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control',
-                                               'placeholder': 'Username'}
-                                        ),
-            'password': forms.PasswordInput(attrs={'class': 'form-control',
-                                                   'placeholder': 'Password'}
-                                            ),
-            'email': forms.EmailInput(attrs={'class': 'form-control',
-                                             'placeholder': 'Email'}
-                                      ),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control',
-                                                   'placeholder': 'Your Phone number'}
-                                            ),
-            'first_name': forms.TextInput(attrs={'class': 'form-control',
-                                                 'placeholder': 'First name'}
-                                          ),
-            'last_name': forms.TextInput(attrs={'class': 'form-control',
-                                                'placeholder': 'Last name'}
-                                         ),
+            'username': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Username'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Password'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Your Phone number'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'First name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}),
+            'department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '학과'}),
+            'student_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '학번'}),
         }
         labels = {
             'username': '아이디',
@@ -44,6 +33,8 @@ class SignUpForm(forms.ModelForm):
             'phone_number': '전화번호',
             'first_name': '이름',
             'last_name': '성',
+            'department':'학과',
+            'student_id':'학번'
         }
 
     def clean_username(self):
@@ -74,21 +65,8 @@ class SignUpForm(forms.ModelForm):
     
 
 class SignInForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': 'Username'}
-                                                      ),
-                               label='아이디'
-                               )
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                 'placeholder': 'Password'}
-                                                          ),
-                               label='비밀번호'
-                               )
-
-
-class UserChangeForm(SignUpForm):
-    pass
-
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Username'}),label='아이디')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Password'}),label='비밀번호')
 
 class ScheduleForm(forms.ModelForm):
     class Meta:

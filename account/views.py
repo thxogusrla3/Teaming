@@ -51,8 +51,9 @@ def user_home(request, user_pk):
     if user.id == user_pk:
         user = get_object_or_404(User, pk=user_pk)
         user_team = TeamMember.objects.filter(user=user) #팀의 목록을 출력해줄것임!
+        team_count = user_team.count()
         form = ScheduleForm(instance=request.user)
-        return render(request, 'account/user_home.html', {'user':user, 'user_team':user_team, 'form':form})
+        return render(request, 'account/user_home.html', {'user':user, 'user_team':user_team, 'form':form,'count':team_count})
     
     else: # 현재사용자가 다른 사용자의 홈을 들어갈경우 로그인창으로 돌아가게 함
         return redirect('account:sign_in')
