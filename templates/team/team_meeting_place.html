@@ -36,7 +36,7 @@
     
     <div class="row">
         <div class="col-xl-6">
-            <div id="map" style="height: 500px;"></div>
+            <div id="map" style="height: 700px;"></div>
             <div id="centerInfoDiv"></div>
         </div>
         <div class="col-xl-6">
@@ -53,15 +53,40 @@
                             출발하는 위치를 검색해 주세요!    
                         </div>
                         <form action="#" class="search-form" onkeypress="return event.keyCode != 13;">
-                            <div class="form-group">
+                            <div class="form-group mb-2" >
                                <span class="icon icon-search" onclick="SearchPlace()" style="cursor: pointer;"></span> 
                                <input type="text" id="SearchPlaceId" class="form-control" placeholder="Place Searching" onkeydown="JavaScript:Enter_Check()" style="width: 50%;">
                             </div>
-                            <div class="form-group" id="CenterPlaceKeyword">
+                            <div class="form-group mb-2" id="CenterPlaceKeyword" style="width: 50%;">
                                 
                             </div>
                          </form>
+                         <div id="meetingPlaceStyleId" style="margin-bottom:5%;" >
+                            <h3 class="heading-sidebar" style="margin-bottom:0;"><p class="jg" id="meetingPlaceId" style="margin-bottom:0;">Meeting Place</p></h3>
+                            <p id="meetingPlaceAddressId" style="font-size:80%;"></p>
+                         </div>
+                         <ul class="categories" id="Location">
+                            <li id="Location0"></li>
+                            <li id="Location1"></li>
+                            <li id="Location2"></li>
+                            <li id="Location3"></li>
+                            <li id="Location4"></li>   
+                            <li></li>
+                         </ul>
                     </div>
+                    <div class="form-group">
+                        <button type="button"
+                           onclick="centerView_click();"
+                           class="btn btn-primary btn-lg btn-block" style="width: 100%; color: white;">Center View</button>
+                     </div>
+                     <div class="form-group">
+                        <button type="button" onclick="largeCenter_click();"
+                           class="btn btn-secondary btn-lg btn-block" style="width: 100%;">Large Center</button>
+                     </div>
+                     <div class="form-group">
+                        <button type="button" onclick="reset_click();"
+                           class="btn py-3 px-4 btn-dark" style="width: 100%;">Reset</button>
+                     </div>
                 </div>
             </div>
         </div>
@@ -113,9 +138,9 @@
    placeOverlay.setMap(null);
       
    var place = document.getElementById('SearchPlaceId').value;
-   02
+
    // 키워드로 장소를 검색합니다
-   ps.keywordSearch(place, placesSearchCB); 
+   ps.keywordSearch(place, placesSearchCB);  //검색결과를 placesSearchCB가
    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
    function placesSearchCB (data, status, pagination) {
        if (status === kakao.maps.services.Status.OK) {
@@ -187,7 +212,7 @@
    }
 // <!-- 주소 저장  이벤트 ----------------------------------------------------------------------------------------------------------------------------->
     var names = new Array();
-     var nameCnt = 0;
+    var nameCnt = 0;
     var placey = new Array();
     var placex = new Array();
     var check = false;
