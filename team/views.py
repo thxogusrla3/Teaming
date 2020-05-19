@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.utils import timezone
-from .models import Team, TeamMember, TeamTimeTable
+from .models import Team, TeamMember, TeamTimeTable, TeamChat
 from account.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import TeamForm, AddForm
@@ -52,14 +52,15 @@ def detail_team(request, team_id):
    user_team = TeamMember.objects.filter(user=user)
    team_member = TeamMember.objects.filter(team=details)
    team_time_table = TeamTimeTable.objects.filter(team=details)
+   team_chat = TeamChat.objects.filter(team=details)
    for i in TeamMember.objects.filter(team__pk=details.pk):
       if i.user.pk == user.pk:         
          return render(request, 'team/detail_team.html',{
-             'details': details, 
-             'team_member':team_member,
-             'user':user, 
-             'user_team':user_team,
-                     
+            'details': details, 
+            'team_member':team_member,
+            'user':user, 
+            'user_team':user_team,
+            'team_chat':team_chat,
              })
    
    return redirect('account:user_home', login_user.pk)
@@ -227,4 +228,11 @@ def all_team_member(request, team_pk):
 
 def team_chat(request, team_pk):
     user = request.user
-    
+    team = get_object_or_404(Team, pk=team_pk)
+    chat = TeamChat()
+    chat.team = team
+    chat.user = user
+    chat.message = request.GET['message']
+    chat.send_message = timezone.now()
+    chat.save()
+    return redirect('team:detail_team', team_pk)

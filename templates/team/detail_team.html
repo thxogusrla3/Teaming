@@ -2,7 +2,25 @@
 {% load static %}
 
 {% block content %}
+
 <script type="text/javascript">
+$(function() {
+    $('textarea').on('keydown', function(event) {
+        if (event.keyCode == 13)
+            if (!event.shiftKey){
+                event.preventDefault();
+                $('#testForm').submit();
+            }
+    });
+    
+    $('#testForm').on('submit', function() {
+        button_click();
+    });
+    
+    function button_click() {
+        alert("you pressed submit button!");
+    }
+});
     function team_leave(team_pk, user_pk){
         var leave_team = confirm("팀을 나가시겠습니까?")
         if (leave_team == true){
@@ -30,20 +48,8 @@
                         +"<span class='d-block text-truncate text-muted fs-xs mt-1'>"+username+"</span>"+"</a>"+"</div>"
                         );
                         
-// <div class="col-4">
-// <a  class="text-center p-3 d-flex flex-column hover-highlight">
-// <span class="profile-image rounded-circle d-block m-auto" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
-// <span class="d-block text-truncate text-muted fs-xs mt-1">{{ member.user.username }}</span>
-// </a>
-// </div>                    
                 }
                     else{
-                        alert("<div class='col-4'>"
-                        + "<a class='text-center p-3 d-flex flex-column hover-highlight'>"
-                        +"<span class='profile-image rounded-circle d-block m-auto' style="+'"background-image:url' +"({% static 'img/default.png' %)};"+' background-size:cover;">'
-                        +"</span>"
-                        +"<span class='d-block text-truncate text-muted fs-xs mt-10'>"+username+"</span>"+"</a>"+"</div>"
-                        );
                         alert(username+"해당 사용자가 존재 하지 않습니다!")
                     }
                 },
@@ -182,16 +188,16 @@
     </div>
     <div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
         <div class="card border mb-g">
-        <form action="{% url 'team:team_chat' %" method="GET">
+        <form action="{% url 'team:team_chat' details.pk %}" method="GET">
             <div class="card-body pl-4 pt-4 pr-4 pb-0">
                 <div class="d-flex flex-column">
                     <div class="border-0 flex-1 position-relative shadow-top">
                         <div class="pt-2 pb-1 pr-0 pl-0 rounded-0 position-relative" tabindex="-1">
                             <span class="profile-image rounded-circle d-block position-absolute" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
-     
                             <div class="pl-5 ml-5">
-                                <textarea class="form-control border-0 p-0 fs-xl" rows="4" placeholder="What's on your mind Codex?..."></textarea>
+                                <textarea id="message" name="message" class="form-control border-0 p-0 fs-xl" rows="4" placeholder="채팅"></textarea>
                             </div>
+                        
                         </div>
                     </div>
                     <div class="height-8 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
@@ -201,11 +207,11 @@
             </div>
         </form>
         </div>   
-        <div class="card border mb-g">
+        <div class="card border mb-g h-50" style="overflow-y:scroll;">
             <div class="msgr d-flex h-100 flex-column bg-white">
                 <!-- BEGIN custom-scroll -->
-                <div class="custom-scroll flex-1 h-100">
-                    <div id="chat_container" class="w-100 p-4">
+                <div class="flex-1 h-100" >
+                    <div  class="w-100 p-4" >
                         <!-- start .chat-segment -->
                         <div class="chat-segment">
                             <div class="time-stamp text-center mb-2 fw-400">
@@ -214,82 +220,44 @@
                         </div>
                         <!--  end .chat-segment -->
                         <!-- start .chat-segment -->
+                        {% for chat in team_chat.all %}
+                        {% if chat.user.pk == user.pk%}
                         <div class="chat-segment chat-segment-sent">
+                                <div class="text-right fw-300 text-muted mt-1 fs-xs">
+                                        {{chat.user.username}}
+                                </div>
                             <div class="chat-message">
                                 <p>
-                                    채팅
+                                    {{chat.message}}
                                 </p>
                             </div>
                             <div class="text-right fw-300 text-muted mt-1 fs-xs">
-                                3:00 pm
+                                    {{chat.send_message}}
                             </div>
                         </div>
+                        {% else %}
                         <!--  end .chat-segment -->
                         <!-- start .chat-segment -->
                         <div class="chat-segment chat-segment-get">
+                            <div class="fw-300 text-muted mt-1 fs-xs">
+                                    {{chat.user.username}}
+                            </div>
                             <div class="chat-message">
                                 <p>
-                                    안녕
+                                    {{chat.message}}
                                 </p>
-                                <p>
-                                    채팅을 만들어보겠습니다
-                                </p>
-                                <p>
-                                    
-                                </p>
+                               
+                                
                             </div>
                             <div class="fw-300 text-muted mt-1 fs-xs">
-                                3:24 pm
+                                    {{chat.send_message}}
                             </div>
                         </div>
+                        {% endif %}
+                        {% endfor %}
                         <!--  end .chat-segment -->
                         <!-- start .chat-segment -->
-                        <div class="chat-segment chat-segment-sent chat-start">
-                            <div class="chat-message">
-                                <p>
-                                    맞아
-                                </p>
-                            </div>
-                        </div>
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment -->
-                        <div class="chat-segment chat-segment-sent chat-end">
-                            <div class="chat-message">
-                                <p>
-                                    채팅 만들어야지
-                                </p>
-                            </div>
-                            <div class="text-right fw-300 text-muted mt-1 fs-xs">
-                                3:26 pm
-                            </div>
-                        </div>
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment -->
-                        <div class="chat-segment chat-segment-get chat-start">
-                            <div class="chat-message">
-                                <p>
-                                    오우
-                                </p>
-                            </div>
-                        </div>
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment -->
-                        <div class="chat-segment chat-segment-get">
-                            <div class="chat-message">
-                                <p>
-                                    언제 만들지
-                                </p>
-                            </div>
-                        </div>
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment -->
-                        <div class="chat-segment chat-segment-get chat-end">
-                            <div class="chat-message">
-                                <p>
-                                    개 어렵네
-                                </p>
-                            </div>
-                        </div>
+                        
                         <!--  end .chat-segment -->
                         <!-- start .chat-segment for timestamp -->
                         <div class="chat-segment">
