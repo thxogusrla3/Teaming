@@ -985,7 +985,8 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                      */
                     $(document).ready(function()
                     {
-        
+                        $('#chat_box_kth').scrollTop($('#chat_box_kth').height());
+
                         $('input[type=radio][name=contactview]').change(function()
                         {
                             if (this.value == 'grid')
