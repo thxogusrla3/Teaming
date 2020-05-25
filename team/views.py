@@ -4,6 +4,8 @@ from .models import Team, TeamMember, TeamTimeTable, TeamChat
 from account.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import TeamForm, AddForm
+from django.core.paginator import Paginator
+
 import simplejson as json
 
 # Create your views here.
@@ -229,10 +231,24 @@ def all_team_member(request, team_pk):
 def team_chat(request, team_pk):
     user = request.user
     team = get_object_or_404(Team, pk=team_pk)
+    data = 0
     chat = TeamChat()
     chat.team = team
     chat.user = user
     chat.message = request.GET['message']
-    chat.send_message = timezone.now()
-    chat.save()
-    return redirect('team:detail_team', team_pk)
+    if chat.message == "":
+        context = {'team_pk': team_pk,'data': data,}
+        return HttpResponse(json.dumps(context), content_type='application/json')
+    else:
+        data = 1
+        context = {'team_pk': team_pk,'data': data,}
+        chat.send_message = timezone.now()
+        chat.save()
+        # return redirect('team:detail_team', team_pk)
+        return HttpResponse(json.dumps(context), content_type='application/json')
+
+def team_chat_delete(request, team_pk):
+    team = get_object_or_404(Team, pk = team_pk)
+    chat = TeamChat.objects.filter(team=team)
+    chat.delete()
+    return redirect('team:detail_team', team.pk)

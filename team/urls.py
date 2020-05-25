@@ -16,4 +16,6 @@ urlpatterns = [
     path('blank', views.blank_html, name='blank'),
     path('<int:team_pk>/all_team_member', views.all_team_member, name="all_team_member"),
     path('<int:team_pk>/team_chat', views.team_chat, name="team_chat"),
+    path('<int:team_pk>/team_chat_delete', views.team_chat_delete, name="team_chat_delete"),
+    
 ]

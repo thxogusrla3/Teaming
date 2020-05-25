@@ -57,17 +57,17 @@ function team_invite(team_pk){
                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                             </a>
 
-                            <span class="text-truncate text-truncate-xl">정보통신공학과</span> //유저에 학번 추가하기
+                            <span class="text-truncate text-truncate-xl">{{team_user.user.department}}</span> 
                         </div>
                         
                     </div>
                 </div>
                 <div class="card-body p-0 collapse show">
                     <div class="p-3">
-                        <a href="" class="mt-1 d-block fs-sm fw-400 text-dark">
-                            <i class="fas fa-mobile-alt text-muted mr-2"></i> {{team_user.user.phone_number}}//학번추가하기</a> 
-                        <a href="" class="mt-1 d-block fs-sm fw-400 text-dark">
-                            <i class="fas fa-mouse-pointer text-muted mr-2"></i> {{team_user.user.email}}</a>
+                        <a href="" class="mt-1 d-block fs-sm fw-500 text-dark">
+                            학번:   {{team_user.user.student_id}}</a>
+                        <a href="" class="mt-1 d-block fs-sm fw-500 text-dark">
+                            이메일: {{team_user.user.email}}</a>
                         
                         <div class="d-flex flex-row">
                             <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#3b5998">

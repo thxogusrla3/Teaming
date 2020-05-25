@@ -4,9 +4,33 @@
 {% block content %}
 
 <script type="text/javascript">
-$(function(){
-    $('#team_chat').on()
-})
+    $(document).ready(function(){
+        $('#chat_box_kth').scrollTop($('#chat_box').height());
+
+        $('#chat_btn').click(function(){//일단 버튼 클릭이야
+        var message = $('.chat-kth').val();
+        var pk = '{{details.pk}}';
+            $.ajax({
+                type:'get',
+                url: "/team/"+pk+'/team_chat?message='+message,
+                dataType:"json",
+
+                success: function(context){
+                    if(context.data == 0){
+                        alert("입력된 메세지가 없습니다.");
+                    }
+                    else if(context.data == 1){
+                        location.href = '/team/'+context.team_pk;
+                    }
+                },
+                error: function(){
+                    console.log('실패');
+                }
+            });
+        });
+    });
+      
+
     function team_leave(team_pk, user_pk){
         var leave_team = confirm("팀을 나가시겠습니까?")
         if (leave_team == true){
@@ -46,7 +70,6 @@ $(function(){
         }
         else return;
     }
-    
 
     function team_time_add(team_pk){
         var add_time_table = confirm("팀에 시간표를 추가하시겠습니까?")
@@ -171,12 +194,12 @@ $(function(){
             </div>
         </div>
     </div>
-    <div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
+    <div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2" style="height: 1000px;">
         <div class="card border mb-g h-50" id="chat_box_kth" style="overflow-y:scroll;">
             <div class="msgr d-flex h-100 flex-column bg-white">
                 <!-- BEGIN custom-scroll -->
                 <div class="flex-1 h-100" >
-                    <div  class="w-100 p-4" >
+                    <div  class="w-100 p-4"id="chat_box" >
                         <!-- start .chat-segment -->
                         
                         <!--  end .chat-segment -->
@@ -233,25 +256,23 @@ $(function(){
             </div>
         </div>
         <div class="card border mb-g">
-            <form action="{% url 'team:team_chat' details.pk %}" method="GET">
-                <div class="card-body pl-4 pt-4 pr-4 pb-0">
-                    <div class="d-flex flex-column">
-                        <div class="border-0 flex-1 position-relative shadow-top">
-                            <div class="pt-2 pb-1 pr-0 pl-0 rounded-0 position-relative" tabindex="-1">
-                                <span class="profile-image rounded-circle d-block position-absolute" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
-                                <div class="pl-5 ml-5">
-                                    <textarea id="message" name="message" class="form-control border-0 p-0 fs-xl" rows="4" placeholder="채팅"></textarea>
-                                </div>
-                            
+            <div class="card-body pl-4 pt-4 pr-4 pb-0">
+                <div class="d-flex flex-column">
+                    <div class="border-0 flex-1 position-relative shadow-top">
+                        <div class="pt-2 pb-1 pr-0 pl-0 rounded-0 position-relative" tabindex="-1">
+                            <span class="profile-image rounded-circle d-block position-absolute" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
+                            <div class="pl-5 ml-5">
+                                <textarea id="message" name="message" class="form-control border-0 p-0 fs-xl chat-kth" rows="4" placeholder="채팅"></textarea>
                             </div>
-                        </div>
-                        <div class="height-8 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
-                            <button class="btn btn-info shadow-0 ml-auto" id="chat_btn">Post</button>
+                        
                         </div>
                     </div>
+                    <div class="height-8 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
+                        <button class="btn btn-info shadow-0 ml-auto" id="chat_btn">Post</button>
+                    </div>
                 </div>
-            </form>
-            </div>   
+            </div>
+        </div>   
     </div>
     <div class="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
         <!-- add : -->
@@ -268,7 +289,7 @@ $(function(){
                     <div class="p-3">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <a href="{% url 'team:member_time_table' details.pk%}" class="d-flex flex-row align-items-center">
+                                <a href="{% url 'team:member_time_table' details.pk %}" class="d-flex flex-row align-items-center">
                                     <div class='icon-stack display-3 flex-shrink-0'>
                                         <i class="fal fa-circle icon-stack-3x opacity-100 color-primary-400"></i>
                                         <i class="fas fa-graduation-cap icon-stack-1x opacity-100 color-primary-500"></i>
@@ -327,6 +348,7 @@ $(function(){
                         </div>
                     </div>
                 </div>
+                <a href="{% url 'team:team_chat_delete' details.pk %}">팀 전체 채팅 삭제</a>
             </div>
         </div>
     </div>

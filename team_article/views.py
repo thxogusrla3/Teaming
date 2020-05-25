@@ -3,6 +3,8 @@ from .models import ArticleFile, ArticleUrl, CommentUrl
 from .forms import ArticleFileForm, ArticleUrlForm
 from team.models import Team, TeamMember
 from account.models import User
+from django.core.paginator import Paginator
+
 from django.utils import timezone
 
 # Create your views here.
@@ -16,8 +18,12 @@ def workspace(request, team_pk, user_pk):
     fileform = ArticleFileForm()
 #     ur = 'https://docs.djangoproject.com/en/2.2/ref/templates/builtins/' 
     search_url = ArticleUrl.objects.filter(team=team, user=now_user)
-    search_file = ArticleFile.objects.filter(team=team, user=now_user)
+    url_paginator = Paginator(search_url,6)
+    url_page_number = request.GET.get('page',1)
+    url_page_obj = url_paginator.get_page(url_page_number)
 
+    search_file = ArticleFile.objects.filter(team=team, user=now_user)
+    file_list = search_file
     return render(request, 'team_article/workspace.html', {
         'search_url':search_url, 
         'search_file':search_file, 
@@ -27,7 +33,7 @@ def workspace(request, team_pk, user_pk):
         'fileform':fileform,
         'user_team':member,
         'member':member,
-        # 'ur':ur,
+        'url_page_obj':url_page_obj,
         })
 
 def articleurl(request, team_pk, user_pk):
