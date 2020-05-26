@@ -12,7 +12,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     <head>
         <meta charset="utf-8">
         <title>
-            user_home
+            Teample
         </title>
         <meta name="description" content="Contacts">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,8 +32,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         <link rel="stylesheet" media="screen, print" href="{% static 'css/fa-brands.css' %}">
         <link rel="stylesheet" media="screen, print" href="{% static 'css/formplugins/summernote/summernote.css' %}">
 
-        <script src="{% static 'js/vendors.bundle.js' %}"></script>
-        <script src="{% static 'js/app.bundle.js' %}"></script>
+        
         <style type="text/css">
             a { color: black; text-decoration: none;}
         </style>
@@ -905,8 +904,9 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                 + waves.js (extension)
                                 + smartpanels.js (extension)
                                 + src/../jquery-snippets.js (core) -->
-                <script src="{% static 'js/formplugins/summernote/summernote.js' %}"></script>
-                
+                                <script src="{% static 'js/vendors.bundle.js' %}"></script>
+                                <script src="{% static 'js/app.bundle.js' %}"></script>
+                                <script src="{% static 'js/formplugins/summernote/summernote.js' %}"></script>
                 <!-- <script src="{% static 'js/datagrid/datatables/datatables.bundle.js' %}"></script> -->
                 <script>
                     var autoSave = $('#autoSave');
@@ -986,6 +986,30 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                      */
                     $(document).ready(function()
                     {
+                        $('#chat_box_kth').scrollTop($('#chat_box').height());
+
+                        $('#chat_btn').click(function(){//일단 버튼 클릭이야
+                        var message = $('.chat-kth').val();
+                        var pk = '{{details.pk}}';
+                            $.ajax({
+                                type:'get',
+                                url: "/team/"+pk+'/team_chat?message='+message,
+                                dataType:"json",
+
+                                success: function(context){
+                                    if(context.data == 0){
+                                        alert("입력된 메세지가 없습니다.");
+                                    }
+                                    else if(context.data == 1){
+                                        location.href = '/team/'+context.team_pk;
+                                    }
+                                },
+                                error: function(){
+                                    console.log('실패');
+                                }
+                            });
+                        });
+                        
                         $('input[type=radio][name=contactview]').change(function()
                         {
                             if (this.value == 'grid')

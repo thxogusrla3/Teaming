@@ -1,6 +1,11 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<style>
+td{
+    text-align: center;
+}
+</style>
 <ol class="breadcrumb page-breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
     <li class="breadcrumb-item"><a href="javascript:void(0);">팀 자료실</a></li>
@@ -91,7 +96,7 @@
                     }
                     else if(data==1){
                         alert("시간표가 성공적으로 삭제 되었습니다.");
-                        location.href = '/team/'+team_pk;
+                        location.href = '/team/'+team_pk + '/member_time_table';
                     }
                 },
                 error: function(){
@@ -121,7 +126,9 @@
                    
                 </div>
                 <h5 class="frame-heading p-0 bg-white mb-g">
-                    최근 수정 시간
+                    {% for time in time.all %}
+                   <strong>수정시간:</strong> {{time.time|date:"m-d H:i"}}
+                    {% endfor %}
                 </h5>
                 <div class="frame-wrap p-0 border-0 m-0" >
                     <table class="table m-0 table-bordered table-sm" id="table-example" style="font-size: 20px;">

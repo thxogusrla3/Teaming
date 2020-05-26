@@ -4,30 +4,31 @@
 {% block content %}
 
 <script type="text/javascript">
+
     $(document).ready(function(){
-        $('#chat_box_kth').scrollTop($('#chat_box').height());
+        // $('#chat_box_kth').scrollTop($('#chat_box').height());
 
-        $('#chat_btn').click(function(){//일단 버튼 클릭이야
-        var message = $('.chat-kth').val();
-        var pk = '{{details.pk}}';
-            $.ajax({
-                type:'get',
-                url: "/team/"+pk+'/team_chat?message='+message,
-                dataType:"json",
+        // $('#chat_btn').click(function(){//일단 버튼 클릭이야
+        // var message = $('.chat-kth').val();
+        // var pk = '{{details.pk}}';
+        //     $.ajax({
+        //         type:'get',
+        //         url: "/team/"+pk+'/team_chat?message='+message,
+        //         dataType:"json",
 
-                success: function(context){
-                    if(context.data == 0){
-                        alert("입력된 메세지가 없습니다.");
-                    }
-                    else if(context.data == 1){
-                        location.href = '/team/'+context.team_pk;
-                    }
-                },
-                error: function(){
-                    console.log('실패');
-                }
-            });
-        });
+        //         success: function(context){
+        //             if(context.data == 0){
+        //                 alert("입력된 메세지가 없습니다.");
+        //             }
+        //             else if(context.data == 1){
+        //                 location.href = '/team/'+context.team_pk;
+        //             }
+        //         },
+        //         error: function(){
+        //             console.log('실패');
+        //         }
+        //     });
+        // });
     });
       
 

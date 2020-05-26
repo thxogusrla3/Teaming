@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from account.models import User
 from django.utils import timezone
 from .models import Team, TeamMember, TeamTimeTable, TeamChat
-from account.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import TeamForm, AddForm
 from django.core.paginator import Paginator
@@ -193,6 +193,7 @@ def add_time_table(request, team_pk):
         return HttpResponse(json.dumps(data), content_type='application/json')
     else:
         ttt = TeamTimeTable(team=team, user=user, total_time_table=user.time_table)
+        ttt.time = timezone.now()
         ttt.save()
         return HttpResponse(json.dumps(data), content_type='application/json')
 
@@ -215,13 +216,11 @@ def team_user_timetable(request, team_pk):
     user_team = TeamMember.objects.filter(team=team)
     member_time_table = TeamTimeTable.objects.filter(team=team)
     user = request.user
-    return render(request, "team/teamtimetable.html",{'user_team':member_time_table, 'user':user, 'team':team})
+    user_time_table =  TeamTimeTable.objects.filter(team=team, user=user)
+    return render(request, "team/teamtimetable.html",{'user_team':member_time_table, 'user':user, 'team':team,'time':user_time_table})
 
 def team_meeting_place(request):
     return render(request, "team/team_meeting_place.html")
-
-def blank_html(request):
-    return render(request, "blank.html")
 
 def all_team_member(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
