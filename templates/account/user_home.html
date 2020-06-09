@@ -5,7 +5,7 @@
 
     <div class="subheader">
         <h1 class="subheader-title">
-            <i class='subheader-icon fal fa-credit-card-front'></i> {{user.username}}
+            <i class='subheader-icon fal fa-credit-card-front'></i> {{user.username}} 
             <small>
                 시간표를 설정하고 메모를 작성하세요!
             </small>
@@ -31,7 +31,7 @@
                             function create_table() {
                                 var username = "{{user.username}}";
                                 var table = document.createElement("table");
-                                table.className = "table table-bordered";
+                                table.className = "table table-bordered table-sm";
                                 var weeks = ["", "월", "화", "수", "목", "금", "토", "일"];
                                 
                                 var first_tr = document.createElement("tr");
@@ -126,8 +126,8 @@
                 
                             create_table();
                         </script>
-                        <button type="button" class="btn btn-success btn-lg" onclick="submit(true)">시간표 바꾸기</button>
-                        <button type="button" class="btn btn-danger btn-lg" onclick="submit(false)">시간표 초기화</button>
+                        <button type="button" class="btn bg-success-200 btn-lg" onclick="submit(true)">시간표 바꾸기</button>
+                        <button type="button" class="btn bg-danger-200 btn-lg" onclick="submit(false)">시간표 초기화</button>
                 
                         <form  method="post" id="schedule_form" action="{% url 'account:set_schedule' %}">
                             {% csrf_token %}
@@ -165,14 +165,16 @@
                 <div class="panel-hdr">
                     <h2>
                         {{user.username}}님의 팀 목록 
+                        <small>전체 팀 목록</small>
                     </h2>
+
                     
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
                         <div class="row">
                             {% if count != 0 %}
-                            {% for userteam in user_team %}
+                            {% for userteam in url_page_obj %}
                             
                             <div class="col-xl-3">
                                 <a href="{% url 'team:detail_team' userteam.team.id %}">
@@ -197,7 +199,7 @@
                                 <h1 class=" color-fusion-500">
                                     팀이 없습니다!
                                     <small class="fw-500">
-                                        팀을 추가해주세요 
+                                        Click Here
                                     </small>
                                 </h1>
                                 </a>
@@ -205,6 +207,19 @@
                             {% endif %}
                             
                         </div>
+                        {% if url_page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ url_page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ url_page_obj.number }} of {{ url_page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if url_page_obj.has_next %}
+                            <a href="?page={{ url_page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ url_page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

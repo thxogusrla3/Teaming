@@ -1,10 +1,14 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect,get_object_or_404, HttpResponse
 from django.contrib import auth
 from .forms import *
 from .models import User
 from team.models import TeamMember
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.core.paginator import Paginator
+import simplejson as json
+
+from django.contrib.auth.decorators import login_required
 
 # 회원가입
 def sign_up(request):
@@ -21,7 +25,6 @@ def sign_up(request):
     else:
         form = SignUpForm()
     return render(request, 'account/sign_up.html', {'form': form})
-
 
 # 로그인
 def sign_in(request):
@@ -52,18 +55,19 @@ def user_home(request, user_pk):
         user = get_object_or_404(User, pk=user_pk)
         user_team = TeamMember.objects.filter(user=user) #팀의 목록을 출력해줄것임!
         team_count = user_team.count()
+        team_paginator = Paginator(user_team,8)
+        team_page_number = request.GET.get('page',1)
+        team_page_obj = team_paginator.get_page(team_page_number)
         form = ScheduleForm(instance=request.user)
-        return render(request, 'account/user_home.html', {'user':user, 'user_team':user_team, 'form':form,'count':team_count})
+        return render(request, 'account/user_home.html', {'user':user, 'user_team':user_team, 'form':form,'count':team_count, 'url_page_obj':team_page_obj})
     
     else: # 현재사용자가 다른 사용자의 홈을 들어갈경우 로그인창으로 돌아가게 함
         return redirect('account:sign_in')
-
 
 # 로그아웃
 def sign_out(request):
     auth.logout(request)
     return redirect('account:sign_in')
-
 
 # 팀 유저의 개인정보를 보여주는 창
 def user_info(request, user_pk):
@@ -71,17 +75,17 @@ def user_info(request, user_pk):
    return render(request, 'account/user_info.html', {'user':user})
 
 # 개인정보수정
-def edit(request, user_pk):
-    user = get_object_or_404(User, pk=user_pk)
-    if request.method == "POST":
-        form = UserChangeForm(data=request.POST, instance=request.user)
+@login_required
+def edit_user(request):
+    if request.method =="POST":
+        form = userChangeform(request.POST, instance=request.user)
         if form.is_valid():
-            user = form.save()
-            return redirect("account:user_home", user_pk)
+            form.save()
+            return redirect('account:user_home', request.user.pk)
+        
     else:
-        form = UserChangeForm(instance=request.user)
-        return render(request, "account/sign_in.html", {'form': form})
-
+        form = userChangeform(instance=request.user)
+    return render(request, 'account/edit_user.html',{'form':form,'user':request.user})
 
 # 시간표 설정
 @login_required
@@ -102,3 +106,12 @@ def user_team(request, user_pk):
     user = get_object_or_404(User, pk=user_pk)
     user_team = TeamMember.objects.filter(user=user)
     return render(request, 'account/user_team.html',{'user_team':user_team, 'user':user})
+
+#아이디 중복체크
+def overlap_username(request):
+    username = request.GET["username"]
+    if User.objects.filter(username=username).exists():
+        data = 0
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    data = 1
+    return HttpResponse(json.dumps(data), content_type='application/json')

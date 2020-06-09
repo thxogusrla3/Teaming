@@ -11,12 +11,12 @@
             return ;
     }
 </script>
-<ol class="breadcrumb page-breadcrumb">
-        <li class="breadcrumb-item"><a href="javascript:void(0);">SmartAdmin</a></li>
+<!-- <ol class="breadcrumb page-breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0);">팀으로</a></li>
         <li class="breadcrumb-item">Page Views</li>
         <li class="breadcrumb-item active">Contacts</li>
         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
-    </ol>
+    </ol> -->
     <div class="subheader">
         <h1 class="subheader-title">
             <i class='subheader-icon fal fa-plus-circle'></i> {{user.username}}의 팀 목록입니다
@@ -40,7 +40,7 @@
     </div>
     <div class="row" id="js-contacts">
         {% for user_team in user_team %}
-        <div class="col-xl-4">
+        <div class="col-xl-3">
             <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
                 
                 <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
@@ -63,29 +63,24 @@
                 </div>
                 <div class="card-body p-0 collapse show">
                     <div class="p-3">
-                            <a onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')" class="mt-1 d-block fs-sm fw-400 text-dark">
-                                    <i class="fas fa-mobile-alt text-muted mr-2"></i>팀 탈퇴</a>
-                                <a href="{% url 'team:member_time_table' user_team.team.pk%}" class="mt-1 d-block fs-sm fw-400 text-dark">
-                                    <i class="fas fa-mouse-pointer text-muted mr-2"></i> 팀 시간표</a>
-                                <address class="fs-sm fw-400 mt-4 text-muted">
-                                    <i class="fas fa-map-pin mr-2"></i> 798 Smyth Rd, Detroit, MI, 48341, USA</address>
-                                    {{ user_team.team.introduce }}
 
-                                <div class="d-flex flex-row">
-                                    <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#3b5998">
-                                        <i class="fab fa-facebook-square"></i>
-                                    </a>
-                                    <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#38A1F3">
-                                        <i class="fab fa-twitter-square"></i>
-                                    </a>
-                                    <a href="javascript:void(0);" class="mr-2 fs-xxl" style="color:#0077B5">
-                                        <i class="fab fa-linkedin"></i>
-                                    </a>
+                        <a onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')" class="mt-1 d-block fs-sm fw-400 text-dark">
+                            <i class="fas fa-times-circle text-muted mr-2"></i>탈퇴
+                        </a>
+                        
+                        <a href="{% url 'team:member_time_table' user_team.team.pk%}" class="mt-1 d-block fs-sm fw-400 text-dark">
+                            <i class="fas fa-calendar-alt text-muted mr-2"></i>합친 시간표
+                        </a>
+                        
+                        <a href="{% url 'team_article:workspace' user_team.team.pk user.pk %}" class="mt-1 d-block fs-sm fw-400 text-dark">
+                            <i class="fas fa-list-alt text-muted mr-2"></i>자료공유
+                        </a>
+                            <hr>
+                        {{ user_team.team.introduce }}
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock %}

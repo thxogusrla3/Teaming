@@ -9,14 +9,8 @@ from django.core.paginator import Paginator
 import simplejson as json
 
 # Create your views here.
-# def correct_teammember(request, team_pk):
-#    team = get_object_or_404(Team, pk=team_pk)
-#    user = request.user
-#    for i in TeamMember.objects.filter(team__team_name=team.team_name):
-#       if i.user.pk == user.pk:
-#          return render
-# 2진 데이터를 or로 비교
 
+# 2진 데이터를 or로 비교
 def or_gate(a, b):      
     result = ""
     for i in range(len(a)):
@@ -70,23 +64,23 @@ def detail_team(request, team_id):
 @login_required
 def create_team(request):
    # user = get_object_or_404(User, pk=user_id)
-   user = request.user
-   
-   if request.method == 'POST':
-      form = TeamForm(request.POST)
-      if form.is_valid():
-         team = form.save()
-         TeamMember.objects.create(team=team, user=user)
+    user = request.user
+    data = 0
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
+        if form.is_valid():
+            team = form.save()
+            TeamMember.objects.create(team=team, user=user)
          # team.members.add(user)
-         team.team_leader.add(user)
-         team.team_name = form.cleaned_data['team_name']
-         team.introduce = form.cleaned_data['introduce']
-         team.created_date = timezone.now()
-         team.save()
-         return redirect('team:detail_team', team.pk)
-   else:
-      form = TeamForm()
-      return render(request, 'team/create_team.html', {'form': form})
+            team.team_leader.add(user)
+            team.team_name = form.cleaned_data['team_name']
+            team.introduce = form.cleaned_data['introduce']
+            team.created_date = timezone.now()
+            team.save()
+            return redirect('team:detail_team', team.pk)
+    # else:
+    form = TeamForm()
+    return render(request, 'team/create_team.html', {'form': form,'user':user})
 
 @login_required
 def add_member(request, team_id):

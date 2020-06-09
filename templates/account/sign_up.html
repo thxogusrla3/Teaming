@@ -12,7 +12,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     <head>
         <meta charset="utf-8">
         <title>
-            Login - - SmartAdmin v4.0.2
+            Teample
         </title>
         <meta name="description" content="Login">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,19 +51,42 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                             {% csrf_token %}
                                             
                                             <div class="form-group">
-                                                    <label for="{{ form.last_name.id_for_label }}">성</label>
+                                                    <!-- <label for="{{ form.last_name.id_for_label }}">성</label>
                                                     {{ form.last_name }}
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="{{ form.first_name.id_for_label }}">이름</label>
                                                     {{ form.first_name }}
-                                                </div>
-                                            <div class="form-group">
+                                                </div> -->
+                                                
+                                            <!-- <div class="form-group">
                                                 <label class="form-label" for="{{ form.username.id_for_label }}">아이디</label>
                                                 {{ form.username }}
                                                 {{ form.username.errors }}
+                                            </div> -->
+                                            <label class="form-label" for="{{ form.password.id_for_label }}">Login_Id </label>
+                                            <div class="input-group mb-3 input_username">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text text-success">
+                                                        <i class="ni ni-user fs-xl"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" id="username" name="username" class="form-control" placeholder="로그인할 아이디입니다.." aria-label="Username" aria-describedby="basic-addon1">
                                             </div>
-                                            <div class="form-group" id="id_password">
+                                            <div class="overlap"></div>
+                                            <label class="form-label" for="{{ form.password.id_for_label }}">Password </label>
+                                            <div class="input-group mb-3 psw">
+                                                <div class="input-group-prepend">
+                                                    
+                                                    <span class="input-group-text text-success">
+                                                        <i class="ni ni-user fs-xl"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="password" aria-label="비밀번호" class="form-control js_pw" placeholder="비밀번호" id="password" name="password">
+                                                <input type="password" aria-label="비밀번호 확인" class="form-control js_pw" placeholder="비밀번호 확인" id="check_password" name="check_password">
+                                            </div>
+                                            <div class="error mb-3"></div>
+                                            <!-- <div class="form-group" id="id_password">
                                                 <label class="form-label" for="{{ form.password.id_for_label }}">비밀번호 </label>
                                                 {{ form.password }}
                                                 {{ form.password.errors }}
@@ -72,24 +95,77 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                                 <label class="form-label" for="{{ form.password.id_for_label }}">비밀번호 확인</label>
                                                 {{ form.check_password }}
                                                 {{ form.check_password.errors }}
+                                            </div> -->
+                                            <label for="{{ form.last_name.id_for_label }}">사용자 이름</label>
+                                            <div class="input-group mb-5">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text text-success">
+                                                        <i class="ni ni-user fs-xl"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" aria-label="성" class="form-control" placeholder="성" id="last_name" name="last_name">
+                                                <input type="text" aria-label="이름" class="form-control" placeholder="이름" id="first_name" name="first_name">
                                             </div>
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <label class="form-label" for="{{ form.email.id_for_label }}">이메일</label>
                                                 {{ form.email }}
-                                            </div>
-                                            <div class="form-group">
+                                            </div> -->
+                                            
+                                            <!-- <div class="form-group">
                                                 <label class="form-label" for="{{ form.email.id_for_label }}">학과</label>
                                                 {{ form.department }}
+                                            </div> -->
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="inputGroupSelect01">학과 선택</label>
+                                                    </div>
+                                                    <select class="custom-select" id="department" name="department">
+                                                        <option value="a">과를 선택해주세요!</option>
+                                                        <option value="0">정보통신공학과</option>
+                                                        <option value="1">컴퓨터공학과</option>
+                                                        <option value="2">소프트웨어공학과</option>
+                                                        <option value="3">글로컬IT학과</option>
+                                                        <option value="4">신학과</option>
+                                                        <option value="5">경제학과</option>
+                                                        <option value="6">신문방송학과</option>
+                                                        <option value="7">영어학과</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="inputGroupSelect01">이메일</label>
+                                                    </div>
+                                                    <input type="email" aria-label="email" class="form-control" placeholder="email" id="email" name="email">
+                                                </div>
+                                            </div>
+                                            <!-- <div class="form-group">
                                                 <label class="form-label" for="{{ form.email.id_for_label }}">학번</label>
                                                 {{ form.student_id }}
+                                            </div> -->
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="inputGroupSelect01">학번</label>
+                                                    </div>
+                                                    <input type="text" aria-label="학번" class="form-control" placeholder="학번" id="student_id" name="student_id">
+                                                </div>
                                             </div>
                                             <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="inputGroupSelect01">번호</label>
+                                                    </div>
+                                                    <input type="text" aria-label="번호" class="form-control" placeholder=" - 붙여주세요!" id="phone_number" name="phone_number">
+                                                </div>
+                                            </div>
+                                            <!-- <div class="form-group">
                                                 <label class="form-label" for="{{ form.phone_number.id_for_label }}">번호</label>
                                                 {{ form.phone_number }}
                                                 {{ form.phone_number.errors }}
-                                            </div>
+                                            </div> -->
                                             <div class="row no-gutters">
                                                 <div class="col-md-4 ml-auto text-right">
                                                     <button type="input" class="btn btn-block btn-danger btn-lg mt-3"  onclick="check_account()">회원가입</button>
@@ -108,38 +184,53 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                 </div>
             </div>
         </div>
-        <!-- base vendor bundle: 
-			 DOC: if you remove pace.js from core please note on Internet Explorer some CSS animations may execute before a page is fully loaded, resulting 'jump' animations 
-						+ pace.js (recommended)
-						+ jquery.js (core)
-						+ jquery-ui-cust.js (core)
-						+ popper.js (core)
-						+ bootstrap.js (core)
-						+ slimscroll.js (extension)
-						+ app.navigation.js (core)
-						+ ba-throttle-debounce.js (core)
-						+ waves.js (extension)
-						+ smartpanels.js (extension)
-						+ src/../jquery-snippets.js (core) -->
+        
         <script src="{% static 'js/vendors.bundle.js' %}"></script>
         <script src="{% static 'js/app.bundle.js' %}"></script>
         <script>
-            function check_account() {
-            var form = document.getElementById("sign-up-form");
-            var password = document.getElementById("id_password").value;
-            var check_password = document.getElementById("id_check_password").value;
-
-            if (password == "" || check_password == "") {
-                alert("비밀번호를 입력해 주세요");
-            } else {
-                if (password != check_password) {
-                    alert("비밀번호가 일치하지 않습니다")
-                } else {
-                    form.submit();
+            
+        $('.js_pw').focusout(function(){
+            var pw1 = $('#password').val();
+            var pw2 = $('#check_password').val();
+            
+            if(pw1 != "" && pw2 != ""){
+                if(pw1 == pw2){
+                    $('.psw').removeClass('mb-3')
+                    $('.error').text("- 일치합니다!").css('color','green').addClass('mb-3');
+                }
+                else{
+                    $('.psw').removeClass('mb-3')
+                    $('.error').text('- 비밀번호를 다시 확인해주세요!').css('color','red').addClass('mb-3');
                 }
             }
-        }
+            else if(pw2 !="" && pw1 == ""){
+                $('.psw').removeClass('mb-3')
+                $('.error').text('- 비밀번호를 다시 확인해주세요!').css('color','red').addClass('mb-3');
+            }
+        });
 
+        $('#username').focusout(function(){
+            var username = $('#username').val();
+            if(username !=""){
+                $.ajax({
+                    type:'get',
+                    url: "/overlap_username?username="+username,
+                    success: function(data){
+                        if(data==1){
+                            $('.input_username').removeClass('mb-3')
+                            $('.overlap').text("- 중복된 아이디가 없습니다!").css('color','green').addClass("mb-3")
+                        }
+                        else if(data == 0){
+                            $('.input_username').removeClass('mb-3')
+                            $('.overlap').text("- 중복된 아이디입니다.").css('color','red').addClass("mb-3")
+                        }
+                    },
+                    error: function(){
+                        console.log('실패');
+                    }
+                });
+            }
+        })
         </script>
     </body>
 </html>

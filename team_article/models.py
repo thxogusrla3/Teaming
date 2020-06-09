@@ -54,7 +54,7 @@ class ArticleUrl(models.Model):
         return self.explain_content
 
     def summary(self):
-        return self.url[0:25]
+        return self.url[0:15]
     
 class CommentUrl(models.Model):
     articleurl = models.ForeignKey(ArticleUrl, on_delete=models.CASCADE)

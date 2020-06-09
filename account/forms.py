@@ -1,10 +1,17 @@
 from django import forms
 from .models import User
-
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth import get_user_model
 
 class SignUpForm(forms.ModelForm):
     # password = forms.CharField(required=True)
-    check_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Again Password'}),required=True,label='비밀번호 확인')
+    check_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control','placeholder': 'Again Password'}),
+            required=True,
+            label='비밀번호 확인'
+            )
+
     class Meta:
         model = User
         fields = ['username',
@@ -51,8 +58,11 @@ class SignUpForm(forms.ModelForm):
     def clean_check_password(self):
         password = self.cleaned_data['password']
         check_password = self.cleaned_data['check_password']
-        if password and check_password and password != check_password:
+        if password =="" or check_password=="":
             raise forms.ValidationError("비밀번호를 다시 확인해주세요.")
+        elif password != check_password:
+            raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
+
         return check_password
 
     def save(self, commit=True):
@@ -61,6 +71,8 @@ class SignUpForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
     # 폰 번호에 '-'가 2개 있어야 검증되서 통과함
     
 
@@ -72,3 +84,8 @@ class ScheduleForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['time_table']
+
+class userChangeform(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'department','email', 'student_id']

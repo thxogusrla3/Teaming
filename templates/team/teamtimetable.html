@@ -114,14 +114,15 @@ td{
             </h5>
             <div class="card-body">
                 
-                <div class="frame-wrap bg-faded mb-3">
+                <div class="frame-wrap bg-faded mb-1">
+                    
                     <div class="custom-checkbox d-inline-flex mr-3">
-                            <a onclick="team_time_add('{{ team.pk }}')"style="color: black;">
-                            <button type="button" class="btn btn-default" id = "add_button">내 시간표 추가</button></a>
+                        <a onclick="team_time_add('{{ team.pk }}')"style="color: black;">
+                        <button type="button" class="btn btn-default" id = "add_button">내 시간표 추가</button></a>
                     </div>
                     <div class=" custom-checkbox d-inline-flex mr-3">
-                            <a onclick="delete_team_timetable('{{ team.pk }}')"style="color: black;">
-                            <button type="button" class="btn btn-default">내 시간표 삭제</button></a>
+                        <a onclick="delete_team_timetable('{{ team.pk }}')"style="color: black;">
+                        <button type="button" class="btn btn-default">내 시간표 삭제</button></a>
                     </div>
                    
                 </div>

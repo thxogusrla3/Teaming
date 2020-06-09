@@ -5,32 +5,14 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function(){
-        // $('#chat_box_kth').scrollTop($('#chat_box').height());
-
-        // $('#chat_btn').click(function(){//일단 버튼 클릭이야
-        // var message = $('.chat-kth').val();
-        // var pk = '{{details.pk}}';
-        //     $.ajax({
-        //         type:'get',
-        //         url: "/team/"+pk+'/team_chat?message='+message,
-        //         dataType:"json",
-
-        //         success: function(context){
-        //             if(context.data == 0){
-        //                 alert("입력된 메세지가 없습니다.");
-        //             }
-        //             else if(context.data == 1){
-        //                 location.href = '/team/'+context.team_pk;
-        //             }
-        //         },
-        //         error: function(){
-        //             console.log('실패');
-        //         }
-        //     });
-        // });
-    });
-      
+    function team_leave(team_pk, user_pk){
+    var leave_team = confirm("팀을 나가시겠습니까?")
+    if (leave_team == true){
+        location.href = '/team/'+team_pk+'/'+user_pk+'/'+'leave_team';
+    }
+    else
+        return ;
+}
 
     function team_leave(team_pk, user_pk){
         var leave_team = confirm("팀을 나가시겠습니까?")
@@ -119,6 +101,7 @@
     <li class="breadcrumb-item"><a href="{% url 'account:user_home' user.pk %}"> Home </a></li>
     <li class="breadcrumb-item"><a href="{% url 'team:all_team_member' details.pk %}"> 전체 팀원 </a></li>
     <li class="breadcrumb-item"><a onclick="team_invite('{{details.pk}}')"style="color: black;">팀원 추가</a></li>
+    <li class="breadcrumb-item"><a onclick="team_leave('{{ details.pk }}', '{{user.pk}}')"style="color: black;">팀 탈퇴</a></li>
     <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
 </ol>
 <div class="subheader">
@@ -138,16 +121,16 @@
                     <div class="d-flex flex-column align-items-center justify-content-center p-4">
                         <img src="{% static 'img/default.png' %}" class="rounded-circle shadow-2 img-thumbnail" alt="">
                         <h5 class="mb-0 fw-700 text-center mt-3">
-                            {{user.username}}
+                            {{user.last_name}}{{user.first_name}}
                         </h5>
                     </div>
                 </div>
                 <div class="col-6">
-                    <a href="{% url 'account:user_home' user.pk %}">
+                    <a href="{% url 'account:edit_user' %}">
                     <div class="text-center py-3">
                         <h5 class="mb-0 fw-700">
                             내 정보
-                            <small class="text-muted mb-0">Connections</small>
+                            <small class="text-muted mb-0">수정</small>
                         </h5>
                     </div>
                 </a>
@@ -180,9 +163,9 @@
                 <div class="col-4">
                     <a  class="text-center p-3 d-flex flex-column hover-highlight">
                         <span class="profile-image rounded-circle d-block m-auto" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
-                        <span class="d-block text-truncate text-muted fs-xs mt-1">{{ member.user.username }}</span>
+                        <span class="d-block text-truncate text-muted fs-xs mt-1">{{ member.user.last_name }}{{member.user.first_name}}</span>
                     </a>
-                    <a href="{% url 'team:expulsion_member' member.team.pk member.user.pk %}">x</a>
+                    <!-- <a href="{% url 'team:expulsion_member' member.team.pk member.user.pk %}">x</a> -->
                 </div>
                 {% endfor %}
                 

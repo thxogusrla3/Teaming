@@ -15,15 +15,19 @@ class TeamForm(forms.ModelForm):
             'team_name':'팀 이름',
             'introduce':'팀 소개'
         }
-# class AddForm(forms.Form):
-#     username = forms.CharField(max_length=20)
+    def chack_team_name(self):
+        team_name = self.team_name
+        introduce = self.introduce
+
+        if team_name =="" or introduce=="":
+            raise forms.ValidationError("팀을 확인해주세요!")
 
 class AddForm(forms.ModelForm):
     username = forms.CharField(max_length=20)
     class Meta:
         model = TeamMember
         fields = ['username']
-             
+ 
 class TeamChatForm(forms.ModelForm):
     class Meta:
         model = TeamChat
