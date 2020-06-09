@@ -31,6 +31,8 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         <link rel="stylesheet" media="screen, print" href="{% static 'css/fa-solid.css' %}">
         <link rel="stylesheet" media="screen, print" href="{% static 'css/fa-brands.css' %}">
         <link rel="stylesheet" media="screen, print" href="{% static 'css/formplugins/summernote/summernote.css' %}">
+        <!-- font awesome -->
+        <script src="https://kit.fontawesome.com/d71a95c1b2.js" crossorigin="anonymous"></script>
 
         
         <style type="text/css">
@@ -122,12 +124,11 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                             <li class="nav-title">Teample Menu</li>
                             <li>
                                 <a href="{% url 'account:user_home' user.pk %}" > <!--title속성값은 마우스 올려놨을 때 출력되는 문자열임.-->
-                                    <i class="fal fa-tag"></i>
+                                    <i class="fas fa-h-square"></i>
                                     <span class="nav-link-text" data-i18n="nav.package_info">Home</span>
                                 </a>
                             </li>
-                            
-                                                       <li>
+                            <li>
                                 <a href="#" title="Form Stuff" data-filter-tags="form stuff">
                                     <i class="fal fa-edit"></i>
                                     <span class="nav-link-text" data-i18n="nav.form_stuff">Team</span>
@@ -146,6 +147,15 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     
                                 </ul>
                             </li>
+<<<<<<< HEAD
+                            <li>
+                                <a href="{% url 'account:edit_user' %}" > <!--title속성값은 마우스 올려놨을 때 출력되는 문자열임.-->
+                                    <i class="fas fa-user-edit"></i>
+                                    <span class="nav-link-text" data-i18n="nav.package_info">내 정보</span>
+                                </a>
+                            </li>
+=======
+>>>>>>> cbdd3fd85fdf5b0dded215ae753e80b8c2ffb673
                         </ul>
                         <div class="filter-message js-filter-message bg-success-600"></div>
                     </nav>
@@ -369,7 +379,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     
                                     <div class="dropdown-divider m-0"></div>
                                         <a href="{% url 'account:sign_out' %}"><span data-i18n="drpdwn.page-logout">Logout</span></a>
-                                        <span class="float-right fw-n">&commat;codexlantern</span>
+                                        
                                 </div>
                             </div>
                         </div>
@@ -498,6 +508,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                         localStorage.removeItem("summernoteData");
                         $('#saveToLocal').summernote('reset');
                     }
+
                     $('.team_create').focusout(function(){
                         var team_name = $("#team_name").val();
                         var introduce = $('#introduce').val();
