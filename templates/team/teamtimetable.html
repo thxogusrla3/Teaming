@@ -32,37 +32,35 @@ td{
         text-align: center;
     }
     </style>
+
+<script>
+    const arr = new Array(13).fill(0).map(() => new Array(7).fill(0));
     {% for i in user_team.all %}
-    <script>
     $( function () {
         var a = "{{ i.total_time_table }}";
-        var user_name = "{{i.user.username}}";
+        var user_last_name = "{{i.user.last_name}}";
+        var user_first_name = "{{i.user.first_name}}";
         let count = 0;
-        for (let i = 0; i < 13; i++) {   
+        for (let i = 0; i < 13; i++) {
             for (let j = 0; j < 7; j++) {
                 // $('#'+i+j).addClass("kth_td_style");
                 if(a.charAt(count) != 0){
-                    $('#'+i+j).text( user_name+"\n"+$('#'+i+j).text());
+                    // $('#'+i+j).text( user_name+"\n"+$('#'+i+j).text());
+                    $('#'+i+j).append( user_last_name+user_first_name+"<br>").css('font-size','15px')
+                    arr[i][j]++;
                 } //(#ij).text(kth + )
                 count++;
             }
         }
+        for (let i = 0; i < 13; i++) {
+            for (let j = 0; j < 7; j++) {
+                
+            }
+        }
     });
-    
-    </script>
     {% endfor %}
+    // console.log(arr)
     
-    <script >
-    //몇명인지 체크
-    // $(function(){
-    //     for (let i = 0; i < 13; i++) {   
-    //         for (let j = 0; j < 7; j++) {
-    //             if($('#'+i+j).text() !== ""){
-    //                 $('#'+i+j).text($('#'+i+j).text()+$('#'+i+j).text().split(' ').length);
-    //             }
-    //         }
-    //     }
-    // });
     function team_time_add(team_pk){
         var add_time_table = confirm("팀에 시간표를 추가하시겠습니까?")
         if (add_time_table == true ){

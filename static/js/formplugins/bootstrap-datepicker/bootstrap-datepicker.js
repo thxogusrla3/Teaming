@@ -50,9 +50,8 @@
 				// $.inArray doesn't work with Dates
 				var val = d && d.valueOf();
 				for (var i=0, l=this.length; i < l; i++)
-          // Use date arithmetic to allow dates with different times to match
-          if (0 <= this[i].valueOf() - val && this[i].valueOf() - val < 1000*60*60*24)
-						return i;
+          			// Use date arithmetic to allow dates with different times to match
+					if (0 <= this[i].valueOf() - val && this[i].valueOf() - val < 1000*60*60*24) return i;
 				return -1;
 			},
 			remove: function(i){
@@ -106,7 +105,7 @@
 		if (this.component && this.component.length === 0)
 			this.component = false;
 		this.isInline = !this.component && this.element.is('div');
-
+		
 		this.picker = $(DPGlobal.template);
 
 		// Checking templates and inserting
@@ -821,9 +820,8 @@
 			}
 			while (dowCnt < this.o.weekStart + 7){
 				html += '<th class="dow';
-        if ($.inArray(dowCnt, this.o.daysOfWeekDisabled) !== -1)
-          html += ' disabled';
-        html += '">'+dates[this.o.language].daysMin[(dowCnt++)%7]+'</th>';
+				if ($.inArray(dowCnt, this.o.daysOfWeekDisabled) !== -1) html += ' disabled';
+				html += '">'+dates[this.o.language].daysMin[(dowCnt++)%7]+'</th>';
 			}
 			html += '</tr>';
 			this.picker.find('.datepicker-days thead').append(html);
@@ -1231,7 +1229,7 @@
 			var $target = $(e.currentTarget);
 			var timestamp = $target.data('date');
 			var date = new Date(timestamp);
-
+			alert("클릭했따!!"); //테스트
 			if (this.o.updateViewDate) {
 				if (date.getUTCFullYear() !== this.viewDate.getUTCFullYear()) {
 					this._trigger('changeYear', this.viewDate);
@@ -1728,7 +1726,7 @@
 		en: {
 			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+			daysMin: ["일", "월", "화", "수", "목", "금", "토"],
 			months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",

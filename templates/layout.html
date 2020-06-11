@@ -31,6 +31,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         <link rel="stylesheet" media="screen, print" href="{% static 'css/fa-solid.css' %}">
         <link rel="stylesheet" media="screen, print" href="{% static 'css/fa-brands.css' %}">
         <link rel="stylesheet" media="screen, print" href="{% static 'css/formplugins/summernote/summernote.css' %}">
+        <link rel="stylesheet" media="screen, print" href="{% static 'css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css' %}">
         <!-- font awesome -->
         <script src="https://kit.fontawesome.com/d71a95c1b2.js" crossorigin="anonymous"></script>
 
@@ -128,6 +129,13 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     <span class="nav-link-text" data-i18n="nav.package_info">Home</span>
                                 </a>
                             </li>
+                            
+                            <li>
+                                <a href="{% url 'account:edit_user' %}" > <!--title속성값은 마우스 올려놨을 때 출력되는 문자열임.-->
+                                    <i class="fas fa-user-edit"></i>
+                                    <span class="nav-link-text" data-i18n="nav.package_info">내 정보</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="#" title="Form Stuff" data-filter-tags="form stuff">
                                     <i class="fal fa-edit"></i>
@@ -146,12 +154,6 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                     </li>
                                     
                                 </ul>
-                            </li>
-                            <li>
-                                <a href="{% url 'account:edit_user' %}" > <!--title속성값은 마우스 올려놨을 때 출력되는 문자열임.-->
-                                    <i class="fas fa-user-edit"></i>
-                                    <span class="nav-link-text" data-i18n="nav.package_info">내 정보</span>
-                                </a>
                             </li>
                         </ul>
                         <div class="filter-message js-filter-message bg-success-600"></div>
@@ -280,13 +282,13 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                         <div class="tab-pane" id="tab-events" role="tabpanel">
                                             <div class="d-flex flex-column h-100">
                                                 <div class="h-auto">
-                                                    <table class="table table-bordered table-calendar m-0 w-100 h-100 border-0">
+                                                    <!-- <table class="table table-bordered table-calendar m-0 w-100 h-100 border-0">
                                                         <tr>
                                                             <th colspan="7" class="pt-3 pb-2 pl-3 pr-3 text-center">
                                                                 <div class="js-get-date h5 mb-2">[your date here]</div>
                                                             </th>
-                                                        </tr>
-                                                        <tr class="text-center">
+                                                        </tr> -->
+                                                        <!-- <tr class="text-center">
                                                             <th>Sun</th>
                                                             <th>Mon</th>
                                                             <th>Tue</th>
@@ -339,16 +341,16 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                                             <td class="text-muted bg-faded">1</td>
                                                             <td class="text-muted bg-faded">2</td>
                                                             <td class="text-muted bg-faded">3</td>
-                                                        </tr>
+                                                        </tr> -->
                                                     </table>
                                                 </div>
                                                 <div class="flex-1 custom-scroll">
-                                                    <div class="p-2">
-                                                        <div class="d-flex align-items-center text-left mb-3">
-                                                        </div>
-                                                    </div>
+                                                   
+                                                        <!-- <div class="d-flex align-items-center text-left mb-3"></div> -->
+                                                        <div class id="datepicker-6"></div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -396,7 +398,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                             <!-- BEGIN Page Footer -->
                             <footer class="page-footer" role="contentinfo">
                                 <div class="d-flex align-items-center flex-1 text-muted">
-                                    <span class="hidden-md-down fw-700">2019 © SmartAdmin by&nbsp;<a href='https://www.gotbootstrap.com' class='text-primary fw-500' title='gotbootstrap.com' target='_blank'>gotbootstrap.com</a></span>
+                                    <span class="hidden-md-down fw-700">2020 © 성공회대학교&nbsp;<a href='https://github.com/thxogusrla3/Teaming.git' class='text-primary fw-500' title='github.com' target='_blank'>https://github.com/thxogusrla3/Teaming.git</a></span>
                                 </div>
                                 <div>
                                     <ul class="list-table m-0">
@@ -477,9 +479,24 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                 <script src="{% static 'js/app.bundle.js' %}"></script>
                 <script src="{% static 'js/formplugins/summernote/summernote.js' %}"></script>
                 <script src="{% static 'js/datagrid/datatables/datatables.bundle.js' %}"></script>
+                <script src="{% static 'js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js' %}"></script> {# 달력에 필요한 js 파일임.#}
                 <script>
                     var autoSave = $('#autoSave');
                     var interval;
+                    var controls = {
+                        leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
+                        rightArrow: '<i class="fal fa-angle-right" style="font-size: 1.25rem"></i>'
+                    }
+
+                    var runDatePicker = function()
+                    {
+                        // inline picker
+                        $('#datepicker-6').datepicker(
+                        {
+                            todayHighlight: true,
+                            templates: controls
+                        });
+                    }
                     var timer = function()
                     {
                         interval = setInterval(function()
@@ -513,7 +530,8 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                         var introduce = $('#introduce').val();
                         // alert(team_name + " " + introduce);
                         if(team_name != "" && introduce !=""){
-                            $('#team_create').removeAttr('disabled');
+                            if(team_name.length>= 15) alert("이름이 너무 깁니다!")
+                            else $('#team_create').removeAttr('disabled');
                         }else{
                             $('#team_create').attr('disabled',true);
                         }
@@ -522,6 +540,9 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                     
                     $(document).ready(function()
                     {
+                        
+                        runDatePicker(); //달력 만들려면 필요함.
+                        $('.datepicker').css('width','350px')
                         $('#chat_box_kth').scrollTop($('#chat_box').height());
 
                         $('#chat_btn').click(function(){//일단 버튼 클릭이야

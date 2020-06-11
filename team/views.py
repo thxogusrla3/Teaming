@@ -115,7 +115,6 @@ def add_member1(request, team_pk):
     user = request.user
     member = TeamMember()
     invite_username = request.GET['username']
-    data = 0
     if User.objects.filter(username=request.GET['username']).count() >0 : #해당 유저 정보가 전체 유저 중에 있을 때 
         invite_user = User.objects.get(username=invite_username)
 

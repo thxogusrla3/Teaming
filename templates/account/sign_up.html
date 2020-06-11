@@ -1,13 +1,5 @@
 {% load static %}
 <!DOCTYPE html>
-<!-- 
-Template Name:  SmartAdmin Responsive WebApp - Template build with Twitter Bootstrap 4
-Version: 4.0.2
-Author: Sunnyat Ahmmed
-Website: http://gootbootstrap.com
-Purchase: https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
-License: You must have a valid license purchased only from wrapbootstrap.com (link above) in order to legally use this theme for your project.
--->
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -51,30 +43,17 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                             {% csrf_token %}
                                             
                                             <div class="form-group">
-                                                    <!-- <label for="{{ form.last_name.id_for_label }}">성</label>
-                                                    {{ form.last_name }}
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="{{ form.first_name.id_for_label }}">이름</label>
-                                                    {{ form.first_name }}
-                                                </div> -->
-                                                
-                                            <!-- <div class="form-group">
-                                                <label class="form-label" for="{{ form.username.id_for_label }}">아이디</label>
-                                                {{ form.username }}
-                                                {{ form.username.errors }}
-                                            </div> -->
-                                            <label class="form-label" for="{{ form.password.id_for_label }}">Login_Id </label>
+                                            <label class="form-label" for="{{ form.password.id_for_label }}">아이디 </label>
                                             <div class="input-group mb-3 input_username">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text text-success">
                                                         <i class="ni ni-user fs-xl"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" id="username" name="username" class="form-control" placeholder="로그인할 아이디입니다.." aria-label="Username" aria-describedby="basic-addon1">
+                                                <input type="text" id="username" name="username" class="form-control login_kth" placeholder="로그인할 아이디입니다.." aria-label="Username" aria-describedby="basic-addon1">
                                             </div>
                                             <div class="overlap"></div>
-                                            <label class="form-label" for="{{ form.password.id_for_label }}">Password </label>
+                                            <label class="form-label" for="{{ form.password.id_for_label }}">비밀번호 </label>
                                             <div class="input-group mb-3 psw">
                                                 <div class="input-group-prepend">
                                                     
@@ -82,20 +61,10 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                                         <i class="ni ni-user fs-xl"></i>
                                                     </span>
                                                 </div>
-                                                <input type="password" aria-label="비밀번호" class="form-control js_pw" placeholder="비밀번호" id="password" name="password">
-                                                <input type="password" aria-label="비밀번호 확인" class="form-control js_pw" placeholder="비밀번호 확인" id="check_password" name="check_password">
+                                                <input type="password" aria-label="비밀번호" class="form-control js_pw login_kth" placeholder="비밀번호" id="password" name="password">
+                                                <input type="password" aria-label="비밀번호 확인" class="form-control js_pw login_kth" placeholder="비밀번호 확인" id="check_password" name="check_password">
                                             </div>
                                             <div class="error mb-3"></div>
-                                            <!-- <div class="form-group" id="id_password">
-                                                <label class="form-label" for="{{ form.password.id_for_label }}">비밀번호 </label>
-                                                {{ form.password }}
-                                                {{ form.password.errors }}
-                                            </div>
-                                            <div class="form-group" id="id_check_password">
-                                                <label class="form-label" for="{{ form.password.id_for_label }}">비밀번호 확인</label>
-                                                {{ form.check_password }}
-                                                {{ form.check_password.errors }}
-                                            </div> -->
                                             <label for="{{ form.last_name.id_for_label }}">사용자 이름</label>
                                             <div class="input-group mb-5">
                                                 <div class="input-group-prepend">
@@ -103,18 +72,9 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                                         <i class="ni ni-user fs-xl"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" aria-label="성" class="form-control" placeholder="성" id="last_name" name="last_name">
-                                                <input type="text" aria-label="이름" class="form-control" placeholder="이름" id="first_name" name="first_name">
+                                                <input type="text" aria-label="성" class="form-control login_kth" placeholder="성" id="last_name" name="last_name">
+                                                <input type="text" aria-label="이름" class="form-control login_kth" placeholder="이름" id="first_name" name="first_name">
                                             </div>
-                                            <!-- <div class="form-group">
-                                                <label class="form-label" for="{{ form.email.id_for_label }}">이메일</label>
-                                                {{ form.email }}
-                                            </div> -->
-                                            
-                                            <!-- <div class="form-group">
-                                                <label class="form-label" for="{{ form.email.id_for_label }}">학과</label>
-                                                {{ form.department }}
-                                            </div> -->
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
@@ -138,19 +98,15 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                                     <div class="input-group-prepend">
                                                         <label class="input-group-text" for="inputGroupSelect01">이메일</label>
                                                     </div>
-                                                    <input type="email" aria-label="email" class="form-control" placeholder="email" id="email" name="email">
+                                                    <input type="email" aria-label="email" class="form-control login_kth" placeholder="email" id="email" name="email">
                                                 </div>
                                             </div>
-                                            <!-- <div class="form-group">
-                                                <label class="form-label" for="{{ form.email.id_for_label }}">학번</label>
-                                                {{ form.student_id }}
-                                            </div> -->
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <label class="input-group-text" for="inputGroupSelect01">학번</label>
                                                     </div>
-                                                    <input type="text" aria-label="학번" class="form-control" placeholder="학번" id="student_id" name="student_id">
+                                                    <input type="text" aria-label="학번" class="form-control login_kth" placeholder="학번" id="student_id" name="student_id">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -158,18 +114,14 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                                                     <div class="input-group-prepend">
                                                         <label class="input-group-text" for="inputGroupSelect01">번호</label>
                                                     </div>
-                                                    <input type="text" aria-label="번호" class="form-control" placeholder=" - 붙여주세요!" id="phone_number" name="phone_number">
+                                                    <input type="text" aria-label="번호" class="form-control login_kth" placeholder=" - 붙여주세요!" id="phone_number" name="phone_number">
                                                 </div>
                                             </div>
-                                            <!-- <div class="form-group">
-                                                <label class="form-label" for="{{ form.phone_number.id_for_label }}">번호</label>
-                                                {{ form.phone_number }}
-                                                {{ form.phone_number.errors }}
-                                            </div> -->
                                             <div class="row no-gutters">
                                                 <div class="col-md-4 ml-auto text-right">
-                                                    <button type="input" class="btn btn-block btn-danger btn-lg mt-3"  onclick="check_account()">회원가입</button>
-                                                    <h4>Already have an account? <a href="{% url 'account:sign_in' %}"> Login here.</a></h4>
+                                                    <button type="input" class="btn btn-block btn-danger btn-lg mt-3 mb-2 login_btn" disabled="disabled" onclick="check_account()">회원가입</button>
+                                                    <br>
+                                                    <a href="{% url 'account:sign_in' %}"> 아이디가 있나요?</a></h4>
                                                 </div>
                                             </div>
                                         </form>
@@ -178,7 +130,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                             </div>
                         </div>
                         <div class="position-absolute pos-bottom pos-left pos-right p-3 text-center text-white">
-                            2019 © SmartAdmin by&nbsp;<a href='https://www.gotbootstrap.com' class='text-white opacity-40 fw-500' title='gotbootstrap.com' target='_blank'>gotbootstrap.com</a>
+                            2020 © 성공회대학교 &nbsp;<a href='https://github.com/thxogusrla3/Teaming.git' class='text-white fw-500' title='github.com' target='_blank'>https://github.com/thxogusrla3/Teaming.git</a>
                         </div>
                     </div>
                 </div>
@@ -201,11 +153,13 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                 else{
                     $('.psw').removeClass('mb-3')
                     $('.error').text('- 비밀번호를 다시 확인해주세요!').css('color','red').addClass('mb-3');
+                    $('.login_btn').attr("disabled",'disabled');
                 }
             }
             else if(pw2 !="" && pw1 == ""){
                 $('.psw').removeClass('mb-3')
                 $('.error').text('- 비밀번호를 다시 확인해주세요!').css('color','red').addClass('mb-3');
+                $('.login_btn').attr("disabled",'disabled');
             }
         });
 
@@ -223,6 +177,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                         else if(data == 0){
                             $('.input_username').removeClass('mb-3')
                             $('.overlap').text("- 중복된 아이디입니다.").css('color','red').addClass("mb-3")
+                            $('.login_btn').attr("disabled",'disabled');
                         }
                     },
                     error: function(){
@@ -231,6 +186,21 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                 });
             }
         })
+        $('.login_kth').focusin(function(){
+            if($('#username').val() !=="" && 
+            $('#password').val() !=="" &&
+            $('#check_password').val() !=="" &&
+            $('#first_name').val() !== "" && 
+            $('#last_name').val() !=="" && 
+            $('#email').val() !=="" && 
+            $('#department').val() !=="" && 
+            $('#student_id').val() !=="" && 
+            $('#phone_number').val() !==""){
+                $('.login_btn').removeAttr('disabled');
+            }
+            else $('.login_btn').attr("disabled",'disabled');
+        })
+
         </script>
     </body>
 </html>

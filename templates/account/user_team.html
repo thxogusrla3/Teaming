@@ -11,33 +11,14 @@
             return ;
     }
 </script>
-<!-- <ol class="breadcrumb page-breadcrumb">
-        <li class="breadcrumb-item"><a href="javascript:void(0);">팀으로</a></li>
-        <li class="breadcrumb-item">Page Views</li>
-        <li class="breadcrumb-item active">Contacts</li>
-        <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
-    </ol> -->
+
     <div class="subheader">
         <h1 class="subheader-title">
             <i class='subheader-icon fal fa-plus-circle'></i> {{user.username}}의 팀 목록입니다
             
         </h1>
     </div>
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="border-faded bg-faded p-3 mb-g d-flex">
-                <input type="text" id="js-filter-contacts" name="filter-contacts" class="form-control shadow-inset-2 form-control-lg" placeholder="Filter contacts">
-                <div class="btn-group btn-group-lg btn-group-toggle hidden-lg-down ml-3" data-toggle="buttons">
-                    <label class="btn btn-default active">
-                        <input type="radio" name="contactview" id="grid" checked="" value="grid"><i class="fas fa-table"></i>
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="contactview" id="table" value="table"><i class="fas fa-th-list"></i>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="row" id="js-contacts">
         {% for user_team in user_team %}
         <div class="col-xl-3">
@@ -47,14 +28,14 @@
                     <div class="d-flex flex-row align-items-center">
                         
                         <div class="info-card-text flex-1">
-                            <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
+                            <a href="{% url 'team:detail_team' user_team.team.pk %}" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
                                 {{user_team.team.team_name}}
                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')">팀 나가기</a>
-                                <a class="dropdown-item" href="#">팀 시간표</a>
-                                <a class="dropdown-item" href="{% url 'team:detail_team' user_team.team.pk %}">팀 </a>
+                                <a class="dropdown-item" onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')"><i class="fas fa-times-circle text-muted mr-2"></i>탈퇴</a>
+                                <a class="dropdown-item" href="{% url 'team:member_time_table' user_team.team.pk%}"><i class="fas fa-calendar-alt text-muted mr-2"></i>합친 시간표</a>
+                                <a class="dropdown-item" href="{% url 'team_article:workspace' user_team.team.pk user.pk %}"><i class="fas fa-list-alt text-muted mr-2"></i>자료공유 </a>
                             </div>
                             <span class="text-truncate text-truncate-xl">{{user_team.team.team_leader.username}}</span>
                         </div>
@@ -62,20 +43,7 @@
                     </div>
                 </div>
                 <div class="card-body p-0 collapse show">
-                    <div class="p-3">
-
-                        <a onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')" class="mt-1 d-block fs-sm fw-400 text-dark">
-                            <i class="fas fa-times-circle text-muted mr-2"></i>탈퇴
-                        </a>
-                        
-                        <a href="{% url 'team:member_time_table' user_team.team.pk%}" class="mt-1 d-block fs-sm fw-400 text-dark">
-                            <i class="fas fa-calendar-alt text-muted mr-2"></i>합친 시간표
-                        </a>
-                        
-                        <a href="{% url 'team_article:workspace' user_team.team.pk user.pk %}" class="mt-1 d-block fs-sm fw-400 text-dark">
-                            <i class="fas fa-list-alt text-muted mr-2"></i>자료공유
-                        </a>
-                            <hr>
+                    <div class="p-3" style="height: 150px;">
                         {{ user_team.team.introduce }}
                     </div>
                 </div>

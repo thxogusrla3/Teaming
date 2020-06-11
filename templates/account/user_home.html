@@ -27,7 +27,9 @@
                         <h2>시간표 설정</h2>
                         
                         <script type="text/javascript">
-                        /*  */
+                            // $('.js_summernote').val() 값을 받아와서 유저 디비에 넣고 
+                            //     alert()
+                            // })
                             function create_table() {
                                 var username = "{{user.username}}";
                                 var table = document.createElement("table");
@@ -165,7 +167,7 @@
                 <div class="panel-hdr">
                     <h2>
                         {{user.username}}님의 팀 목록 
-                        <small>전체 팀 목록</small>
+                        <small> <a href="{% url 'account:user_team' user.pk %}">전체 팀 목록</a> </small>
                     </h2>
 
                     
@@ -178,12 +180,12 @@
                             
                             <div class="col-xl-3">
                                 <a href="{% url 'team:detail_team' userteam.team.id %}">
-                                <div class="card border mb-4 mb-xl-3">
+                                <div class="card border mb-4 mb-xl-3" >
                                     
                                     <!-- notice the additions of utility paddings and display properties on .card-header -->
                                     <div class="card-header bg-trans-gradient py-2 pr-2 d-flex align-items-center flex-wrap">
                                         <!-- we wrap header title inside a span tag with utility padding -->
-                                        <div class="card-title text-white">{{userteam.team.team_name}}</div>
+                                        <div class="card-title text-white" style="font-size: 10px;">{{userteam.team.team_name}}</div>
                                         
                                     </div>
                                     <div class="card-body" style="height: 100px;">
