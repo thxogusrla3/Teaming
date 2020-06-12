@@ -119,17 +119,29 @@ def add_member1(request, team_pk):
         invite_user = User.objects.get(username=invite_username)
 
         if TeamMember.objects.filter(team=team, user=invite_user): # 해당 유저가 팀에 있을 경우
-            data = 1
+            data = {
+                'data' : 1,
+                'first_name':invite_user.first_name,
+                'last_name':invite_user.last_name
+            }
             return HttpResponse(json.dumps(data), content_type='application/json')
             
         else: # 해당 유저가 팀에 없을 경우
-            data = 2
+            data = {
+                'data' : 2,
+                'first_name':invite_user.first_name,
+                'last_name':invite_user.last_name
+            }
             member.team = team
             member.user = invite_user
             member.save()
             return HttpResponse(json.dumps(data), content_type='application/json')
     else:
-        data = 3
+        data = {
+                'data' : 3,
+                'first_name':"",
+                'last_name':""
+            }
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
@@ -212,7 +224,7 @@ def team_user_timetable(request, team_pk):
     user_time_table =  TeamTimeTable.objects.filter(team=team, user=user)
     return render(request, "team/teamtimetable.html",{'user_team':member_time_table, 'user':user, 'team':team,'time':user_time_table})
 
-def team_meeting_place(request):
+def team_meeting_place(request, team_pk):
     return render(request, "team/team_meeting_place.html")
 
 def all_team_member(request, team_pk):

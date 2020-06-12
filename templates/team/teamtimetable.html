@@ -4,38 +4,32 @@
 <style>
 td{
     text-align: center;
+    
 }
 </style>
 <ol class="breadcrumb page-breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
-    <li class="breadcrumb-item"><a href="javascript:void(0);">팀 자료실</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team_article:workspace' team.pk user.pk %}">팀 자료실</a></li>
+    <!-- "{% url 'team_article:workspace' details.pk user.pk %}" -->
+    <li class="breadcrumb-item"><a href="{% url 'team_article:workspace' team.pk user.pk %}">팀 모임</a></li>
 </ol>
 
     <div class="subheader">
         <h1 class="subheader-title">
-            <i class='subheader-icon fal fa-credit-card-front'></i> 저장 및 공유
+            <i class='subheader-icon fal fa-credit-card-front'></i> 합친 시간표
             <small>
-                당신의 자료들을 보관, 공유해주세요!
+                팀원들이 가능한 시간을 확인할 수 있습니다!
             </small>
         </h1>
     </div>
     
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <div class="row">
-    <style>
-    #td_size{
-        width: 80px;
-        height: auto;
-        text-align: center;
-    }
-    .kth_td_style{
-        text-align: center;
-    }
-    </style>
-
 <script>
     const arr = new Array(13).fill(0).map(() => new Array(7).fill(0));
+    var user_count = 0;
     {% for i in user_team.all %}
+    user_count++;
     $( function () {
         var a = "{{ i.total_time_table }}";
         var user_last_name = "{{i.user.last_name}}";
@@ -43,24 +37,28 @@ td{
         let count = 0;
         for (let i = 0; i < 13; i++) {
             for (let j = 0; j < 7; j++) {
-                // $('#'+i+j).addClass("kth_td_style");
-                if(a.charAt(count) != 0){
+                $('#'+i+j).css('font-size','15px');
+                if(a.charAt(count) == 0){
                     // $('#'+i+j).text( user_name+"\n"+$('#'+i+j).text());
-                    $('#'+i+j).append( user_last_name+user_first_name+"<br>").css('font-size','15px')
+                    $('#'+i+j).append( user_last_name+user_first_name+"<br>").css('padding-top',(user_count-arr[i][j]) * 10 + 'px');
                     arr[i][j]++;
-                } //(#ij).text(kth + )
+                }
                 count++;
-            }
-        }
-        for (let i = 0; i < 13; i++) {
-            for (let j = 0; j < 7; j++) {
-                
             }
         }
     });
     {% endfor %}
-    // console.log(arr)
-    
+    $(function(){
+        if(user_count >= 3){
+            for (let i = 0; i < 13; i++) {
+                for (let j = 0; j < 7; j++) {
+                    if(arr[i][j] === user_count) $('#'+i+j).addClass('bg-info-200');
+                    else if(arr[i][j] === user_count-1) $('#'+i+j).addClass('bg-info-50');
+                    // else if(arr[i][j] === user_count-2) $('#'+i+j).addClass('bg-info-50');
+                }
+            }
+        }
+    });
     function team_time_add(team_pk){
         var add_time_table = confirm("팀에 시간표를 추가하시겠습니까?")
         if (add_time_table == true ){
@@ -146,160 +144,133 @@ td{
                         <tbody>
                                 <tr>
                                     <td id="td_size">9시</td>
-                                    <td onclick="change_color(this)" id="00" ></td> 
-                                    <td onclick="change_color(this)" id="01" ></td>
-                                    <td onclick="change_color(this)" id="02"></td>
-                                    <td onclick="change_color(this)" id="03"></td>
-                                    <td onclick="change_color(this)" id="04">
-                                    </td>
-                                    <td onclick="change_color(this)" id="05"></td>
-                                    <td onclick="change_color(this)" id="06"></td>
+                                    <td id="00"></td> 
+                                    <td id="01"></td>
+                                    <td id="02"></td>
+                                    <td id="03"></td>
+                                    <td id="04"></td>
+                                    <td id="05"></td>
+                                    <td id="06"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">10시</td>
-                                    <td onclick="change_color(this)" id="10">
-                                    </td>
-                                    <td onclick="change_color(this)" id="11"></td>
-                                    <td onclick="change_color(this)" id="12"></td>
-                                    <td onclick="change_color(this)" id="13">
-                                    </td>
-                                    <td onclick="change_color(this)" id="14"></td>
-                                    <td onclick="change_color(this)" id="15"></td>
-                                    <td onclick="change_color(this)" id="16"></td>
+                                    <td id="10"></td>
+                                    <td id="11"></td>
+                                    <td id="12"></td>
+                                    <td id="13"></td>
+                                    <td id="14"></td>
+                                    <td id="15"></td>
+                                    <td id="16"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">11시</td>
-                                    <td onclick="change_color(this)" id="20">
-                                    </td>
-                                    <td onclick="change_color(this)" id="21">
-                                    </td>
-                                    <td onclick="change_color(this)" id="22">
-                                    </td>
-                                    <td onclick="change_color(this)" id="23"></td>
-                                    <td onclick="change_color(this)" id="24"></td>
-                                    <td onclick="change_color(this)" id="25">
-                                    </td>
-                                    <td onclick="change_color(this)" id="26"></td>
+                                    <td id="20"></td>
+                                    <td id="21"></td>
+                                    <td id="22"></td>
+                                    <td id="23"></td>
+                                    <td id="24"></td>
+                                    <td id="25"></td>
+                                    <td id="26"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">12시</td>
-                                    <td onclick="change_color(this)" id="30">
-                                    </td>
-                                    <td onclick="change_color(this)" id="31"></td>
-                                    <td onclick="change_color(this)" id="32">
-                                    </td>
-                                    <td onclick="change_color(this)" id="33"></td>
-                                    <td onclick="change_color(this)" id="34">
-                                    </td>
-                                    <td onclick="change_color(this)" id="35"></td>
-                                    <td onclick="change_color(this)" id="36"></td>
+                                    <td id="30"></td>
+                                    <td id="31"></td>
+                                    <td id="32"></td>
+                                    <td id="33"></td>
+                                    <td id="34"></td>
+                                    <td id="35"></td>
+                                    <td id="36"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">13시</td>
-                                    <td onclick="change_color(this)" id="40"></td>
-                                    <td onclick="change_color(this)" id="41"></td>
-                                    <td onclick="change_color(this)" id="42"></td>
-                                    <td onclick="change_color(this)" id="43">
-                                    </td>
-                                    <td onclick="change_color(this)" id="44"></td>
-                                    <td onclick="change_color(this)" id="45"></td>
-                                    <td onclick="change_color(this)" id="46">
-                                    </td>
+                                    <td id="40"></td>
+                                    <td id="41"></td>
+                                    <td id="42"></td>
+                                    <td id="43"></td>
+                                    <td id="44"></td>
+                                    <td id="45"></td>
+                                    <td id="46"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">14시</td>
-                                    <td onclick="change_color(this)" id="50">
-                                    </td>
-                                    <td onclick="change_color(this)" id="51">
-                                    </td>
-                                    <td onclick="change_color(this)" id="52"></td>
-                                    <td onclick="change_color(this)" id="53"></td>
-                                    <td onclick="change_color(this)" id="54"></td>
-                                    <td onclick="change_color(this)" id="55"></td>
-                                    <td onclick="change_color(this)" id="56"></td>
+                                    <td id="50"></td>
+                                    <td id="51"></td>
+                                    <td id="52"></td>
+                                    <td id="53"></td>
+                                    <td id="54"></td>
+                                    <td id="55"></td>
+                                    <td id="56"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">15시</td>
-                                    <td onclick="change_color(this)" id="60"></td>
-                                    <td onclick="change_color(this)" id="61"></td>
-                                    <td onclick="change_color(this)" id="62"></td>
-                                    <td onclick="change_color(this)" id="63">
-                                    </td>
-                                    <td onclick="change_color(this)" id="64"></td>
-                                    <td onclick="change_color(this)" id="65">
-                                    </td>
-                                    <td onclick="change_color(this)" id="66">
-                                    </td>
+                                    <td id="60"></td>
+                                    <td id="61"></td>
+                                    <td id="62"></td>
+                                    <td id="63"></td>
+                                    <td id="64"></td>
+                                    <td id="65"></td>
+                                    <td id="66"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">16시</td>
-                                    <td onclick="change_color(this)" id="70"></td>
-                                    <td onclick="change_color(this)" id="71">
-                                    </td>
-                                    <td onclick="change_color(this)" id="72"></td>
-                                    <td onclick="change_color(this)" id="73"></td>
-                                    <td onclick="change_color(this)" id="74"></td>
-                                    <td onclick="change_color(this)" id="75"></td>
-                                    <td onclick="change_color(this)" id="76"></td>
+                                    <td id="70"></td>
+                                    <td id="71"></td>
+                                    <td id="72"></td>
+                                    <td id="73"></td>
+                                    <td id="74"></td>
+                                    <td id="75"></td>
+                                    <td id="76"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">17시</td>
-                                    <td onclick="change_color(this)" id="80"></td>
-                                    <td onclick="change_color(this)" id="81"></td>
-                                    <td onclick="change_color(this)" id="82"></td>
-                                    <td onclick="change_color(this)" id="83"></td>
-                                    <td onclick="change_color(this)" id="84"></td>
-                                    <td onclick="change_color(this)" id="85">
-                                    </td>
-                                    <td onclick="change_color(this)" id="86">
-                                    </td>
+                                    <td id="80"></td>
+                                    <td id="81"></td>
+                                    <td id="82"></td>
+                                    <td id="83"></td>
+                                    <td id="84"></td>
+                                    <td id="85"></td>
+                                    <td id="86"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">18시</td>
-                                    <td onclick="change_color(this)" id="90">
-                                    </td>
-                                    <td onclick="change_color(this)" id="91"></td>
-                                    <td onclick="change_color(this)" id="92"></td>
-                                    <td onclick="change_color(this)" id="93">
-                                    </td>
-                                    <td onclick="change_color(this)" id="94"></td>
-                                    <td onclick="change_color(this)" id="95"></td>
-                                    <td onclick="change_color(this)" id="96"></td>
+                                    <td id="90"></td>
+                                    <td id="91"></td>
+                                    <td id="92"></td>
+                                    <td id="93"></td>
+                                    <td id="94"></td>
+                                    <td id="95"></td>
+                                    <td id="96"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">19시</td>
-                                    <td onclick="change_color(this)" id="100"></td>
-                                    <td onclick="change_color(this)" id="101">
-                                    </td>
-                                    <td onclick="change_color(this)" id="102"></td>
-                                    <td onclick="change_color(this)" id="103"></td>
-                                    <td onclick="change_color(this)" id="104"></td>
-                                    <td onclick="change_color(this)" id="105">
-                                    </td>
-                                    <td onclick="change_color(this)" id="106"></td>
+                                    <td id="100"></td>
+                                    <td id="101"></td>
+                                    <td id="102"></td>
+                                    <td id="103"></td>
+                                    <td id="104"></td>
+                                    <td id="105"></td>
+                                    <td id="106"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">20시</td>
-                                    <td onclick="change_color(this)" id="110">
-                                    </td>
-                                    <td onclick="change_color(this)" id="111"></td>
-                                    <td onclick="change_color(this)" id="112"></td>
-                                    <td onclick="change_color(this)" id="113"></td>
-                                    <td onclick="change_color(this)" id="114"></td>
-                                    <td onclick="change_color(this)" id="115"></td>
-                                    <td onclick="change_color(this)" id="116"></td>
+                                    <td id="110"></td>
+                                    <td id="111"></td>
+                                    <td id="112"></td>
+                                    <td id="113"></td>
+                                    <td id="114"></td>
+                                    <td id="115"></td>
+                                    <td id="116"></td>
                                 </tr>
                                 <tr>
                                     <td id="td_size">21시</td>
-                                    <td onclick="change_color(this)" id="120"></td>
-                                    <td onclick="change_color(this)" id="121"></td>
-                                    <td onclick="change_color(this)" id="122"></td>
-                                    <td onclick="change_color(this)" id="123"></td>
-                                    <td onclick="change_color(this)" id="124">
-                                    </td>
-                                    <td onclick="change_color(this)" id="125">
-                                    </td>
-                                    <td onclick="change_color(this)" id="126"></td>
+                                    <td id="120"></td>
+                                    <td id="121"></td>
+                                    <td id="122"></td>
+                                    <td id="123"></td>
+                                    <td id="124"></td>
+                                    <td id="125"></td>
+                                    <td id="126"></td>
                                 </tr>
                             </tbody>
                     </table>

@@ -29,16 +29,17 @@
                 type:'get',
                 url: "/team/"+team_pk+'/add_member1?username='+username,
                 success: function(data){
-                    if(data == 1){
+                    if(data.data == 1){
                         alert(username+"해당 사용자가 팀에 존재합니다!");
                     }
-                    else if(data == 2){
+                    else if(data.data == 2){
                         alert(username+" 초대가 완료되었습니다.");
+                        alert(data.data);
                         $('#member').append("<div class='col-4'>"
                         + "<a class='text-center p-3 d-flex flex-column hover-highlight'>"
                         +"<span class='profile-image rounded-circle d-block m-auto' style="+'"background-image:url'+"({% static 'img/default.png' %});"+' background-size: cover;">'
                         +"</span>"
-                        +"<span class='d-block text-truncate text-muted fs-xs mt-1'>"+username+"</span>"+"</a>"+"</div>"
+                        +"<span class='d-block text-truncate text-muted fs-xs mt-1'>"+ data.last_name+data.first_name+"</span>"+"</a>"+"</div>"
                         );
                     }
                     else{
@@ -138,8 +139,8 @@
                     <a href="{% url 'account:user_team' user.pk %}">
                     <div class="text-center py-3">
                         <h5 class="mb-0 fw-700">
-                            My Team
-                            <small class="text-muted mb-0">Followers</small>
+                            내 팀
+                            <small class="text-muted mb-0">전체 팀</small>
                         </h5>
                     </div>
                 </a>
@@ -251,7 +252,7 @@
                         </div>
                     </div>
                     <div class="height-8 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
-                        <button class="btn btn-info shadow-0 ml-auto" id="chat_btn">Post</button>
+                        <button class="btn btn-info shadow-0 ml-auto" id="chat_btn">전송!</button>
                     </div>
                 </div>
             </div>
@@ -282,7 +283,7 @@
                                             팀 시간표
                                         </strong>
                                         <br>
-                                        내 시간표를 등록하고 합쳐진 시간표를 확인하세요!
+                                        <small>내 시간표를 등록하고 합쳐진 시간표를 확인하세요!</small>
                                     </div>
                                 </a>
                             </div>
@@ -303,7 +304,7 @@
                                             팀 자료공유
                                         </strong>
                                         <br>
-                                        조사한 자료들을 올려 팀원들과 공유해 주세요!
+                                        <small>조사한 자료들을 올려 팀원들과 공유해 주세요!</small>
                                     </div>
                                 </a>
                             </div>
@@ -314,7 +315,7 @@
                     <div class="p-3">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <a href="{% url 'team:team_meeting_place' %}" class="d-flex flex-row align-items-center">
+                                <a href="{% url 'team:team_meeting_place' details.pk %}" class="d-flex flex-row align-items-center">
                                     <div class='icon-stack display-3 flex-shrink-0'>
                                         <i class="fal fa-circle icon-stack-3x opacity-100 color-info-400"></i>
                                         <i class="fas fa-graduation-cap icon-stack-1x opacity-100 color-info-400"></i>
@@ -324,14 +325,14 @@
                                             중간 위치 찾기!
                                         </strong>
                                         <br>
-                                        Adding qualifications will help gain more clients
+                                        <small>팀원들의 중간 지점을 찾아주세요!</small>
                                     </div>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a href="{% url 'team:team_chat_delete' details.pk %}">팀 전체 채팅 삭제</a>
+                <!-- <a href="{% url 'team:team_chat_delete' details.pk %}">팀 전체 채팅 삭제</a> -->
             </div>
         </div>
     </div>

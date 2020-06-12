@@ -357,7 +357,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                             </div>
                             <!-- app user menu -->
                             <div>
-                                <a href="#" data-toggle="dropdown" title="drlantern@gotbootstrap.com" class="header-icon d-flex align-items-center justify-content-center ml-2">
+                                <a href="#" data-toggle="dropdown" title="{{user.email}}" class="header-icon d-flex align-items-center justify-content-center ml-2">
                                     <img src="{% static 'img/default.png' %}" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
                                     <!-- you can also add username next to the avatar with the codes below:
 									<span class="ml-1 mr-1 text-truncate text-truncate-header hidden-xs-down">Me</span>
@@ -487,7 +487,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                         leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
                         rightArrow: '<i class="fal fa-angle-right" style="font-size: 1.25rem"></i>'
                     }
-
+                    
                     var runDatePicker = function()
                     {
                         // inline picker
@@ -540,7 +540,6 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                     
                     $(document).ready(function()
                     {
-                        
                         runDatePicker(); //달력 만들려면 필요함.
                         $('.datepicker').css('width','350px')
                         $('#chat_box_kth').scrollTop($('#chat_box').height());

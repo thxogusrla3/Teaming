@@ -36,17 +36,21 @@
                                 <a class="dropdown-item" onclick="team_leave('{{user_team.team.pk}}', '{{user.pk}}')"><i class="fas fa-times-circle text-muted mr-2"></i>탈퇴</a>
                                 <a class="dropdown-item" href="{% url 'team:member_time_table' user_team.team.pk%}"><i class="fas fa-calendar-alt text-muted mr-2"></i>합친 시간표</a>
                                 <a class="dropdown-item" href="{% url 'team_article:workspace' user_team.team.pk user.pk %}"><i class="fas fa-list-alt text-muted mr-2"></i>자료공유 </a>
+                                <a class="dropdown-item" href="{% url 'team:team_meeting_place' user_team.team.pk %}"><i class="fas fa-map-marked"></i>  모임 </a>
+                                
                             </div>
                             <span class="text-truncate text-truncate-xl">{{user_team.team.team_leader.username}}</span>
                         </div>
                         
                     </div>
                 </div>
+                <a href="{% url 'team:detail_team' user_team.team.pk %}">
                 <div class="card-body p-0 collapse show">
                     <div class="p-3" style="height: 150px;">
                         {{ user_team.team.introduce }}
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         {% endfor %}

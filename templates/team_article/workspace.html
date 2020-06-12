@@ -5,7 +5,7 @@
 <ol class="breadcrumb page-breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
     <li class="breadcrumb-item"><a href="{% url 'team:member_time_table' team.pk %}">팀 시간표</a></li>
-    <li class="breadcrumb-item"><a href="javascript:void(0);">모임 장소</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team:team_meeting_place' team.pk %};">모임 장소</a></li>
 </ol>
 
     <div class="subheader">
@@ -117,7 +117,7 @@
                     <div class="panel-container show">
                         <div class="panel-content">
                             <div class="panel-tag">
-                                클릭시 해당 주소로 페이지가 이동합니다! //한 페이지당 9개만
+                                클릭시 해당 주소로 페이지가 이동합니다!
                             </div>
                             <div class="row">
                                     {% for i in url_page_obj %}

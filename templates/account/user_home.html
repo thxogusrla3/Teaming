@@ -33,7 +33,7 @@
                             function create_table() {
                                 var username = "{{user.username}}";
                                 var table = document.createElement("table");
-                                table.className = "table table-bordered table-sm";
+                                table.className = "table table-bordered";
                                 var weeks = ["", "월", "화", "수", "목", "금", "토", "일"];
                                 
                                 var first_tr = document.createElement("tr");
@@ -157,7 +157,7 @@
                         <div class="mt-3">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="autoSave" checked="checked">
-                                <label class="custom-control-label" for="autoSave">Autosave changes to LocalStorage <span class="fw-300">(every 3 seconds)</span></label>
+                                <label class="custom-control-label" for="autoSave">저장하기 </label>
                             </div>
                         </div>
                     </div>
