@@ -24,7 +24,7 @@
             <div class="panel-container show">
                 <div class="panel-content">
                     <div id="schedule" style="text-align: center">
-                        <h2>시간표 설정</h2>
+                        <h2>시간표 설정</h2><small>요일 클릭시 해당 요일이 채워집니다.</small>
                         
                         <script type="text/javascript">
                             // $('.js_summernote').val() 값을 받아와서 유저 디비에 넣고 
@@ -40,6 +40,10 @@
                                 for (var i = 0; i < weeks.length; i++) {
                                     var td = document.createElement("td");
                                     td.innerText = weeks[i];
+                                    if(i > 0){
+                                        td.className = i - 1;
+                                        td.setAttribute("onclick", "change_all(this)");
+                                    }
                                     first_tr.appendChild(td);
                                 }
                                 var thead = document.createElement("thead");
@@ -79,6 +83,24 @@
                                     td.style.backgroundColor = "red";
                                 }
                                 return td
+                            }
+                            /* ------------------------------------------------------------------------------------------ */
+                            function change_all(tag){
+                                var before = tag.className;
+                                if(tag.className == before[0]+"_all"){
+                                    tag.className = before[0];
+                                    for(let i = 0; i<13; i++){
+                                        var td = document.getElementById(i+","+tag.className);
+                                        td.style.removeProperty("background-color");
+                                    }
+                                }
+                                else if(before.length==1){
+                                    tag.className = before+"_all";
+                                    for(let i = 0; i<13; i++){
+                                        var td1 = document.getElementById(i+","+before);
+                                        td1.style.backgroundColor = "red"
+                                    }
+                                }
                             }
                             /* ------------------------------------------------------------------------------------------ */
                             function change_color(tag) {
