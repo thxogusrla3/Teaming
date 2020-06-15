@@ -9,10 +9,10 @@ function team_invite(team_pk){
                 type:'get',
                 url: "/team/"+team_pk+'/add_member1?username='+username,
                 success: function(data){
-                    if(data == 1){
+                    if(data.data == 1){
                         alert(username+"해당 사용자가 팀에 존재합니다!");
                     }
-                    else if(data == 2){
+                    else if(data.data == 2){
                         alert(username+" 초대가 완료되었습니다.");
                         location.href = '/team/'+team_pk;
                     }
@@ -30,7 +30,7 @@ function team_invite(team_pk){
 </script>
 <ol class="breadcrumb page-breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
-    <li class="breadcrumb-item"><a onclick="team_invite('{{details.pk}}')"style="color: black;">팀원 추가</a></li>
+    <li class="breadcrumb-item"><a onclick="team_invite('{{team.pk}}')"style="color: black;">팀원 추가</a></li>
         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
     </ol>
     <div class="subheader">

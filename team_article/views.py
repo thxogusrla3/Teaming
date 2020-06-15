@@ -22,20 +22,22 @@ def workspace(request, team_pk, user_pk):
     url_page_number = request.GET.get('page',1)
     url_page_obj = url_paginator.get_page(url_page_number)
 
-    search_file = ArticleFile.objects.filter(team=team, user=now_user)
-    file_list = search_file
-    return render(request, 'team_article/workspace.html', {
-        'search_url':search_url, 
-        'search_file':search_file, 
-        'team':team, 'user':user,
-        'urlform':urlform,
-        'now_user':now_user,
-        'fileform':fileform,
-        'user_team':member,
-        'member':member,
-        'url_page_obj':url_page_obj,
-        })
-
+    if TeamMember.objects.filter(team=team, user=user).exists():
+        search_file = ArticleFile.objects.filter(team=team, user=now_user)
+        file_list = search_file
+        return render(request, 'team_article/workspace.html', {
+            'search_url':search_url, 
+            'search_file':search_file, 
+            'team':team, 'user':user,
+            'urlform':urlform,
+            'now_user':now_user,
+            'fileform':fileform,
+            'user_team':member,
+            'member':member,
+            'url_page_obj':url_page_obj,
+            })
+    else:
+        return redirect('account:user_home', user.pk)
 def articleurl(request, team_pk, user_pk):
     team = get_object_or_404(Team, pk=team_pk)
     user = get_object_or_404(User, pk=user_pk)
@@ -76,12 +78,17 @@ def articlefile(request, team_pk, user_pk):
 
 
 def delete_articleurl(request, team_pk, user_pk, url_pk):
-    url = ArticleUrl.objects.filter(pk=url_pk)
-    url.delete()
-    return redirect('team_article:workspace', team_pk, user_pk)
-
+    if request.user.pk == user_pk:
+        url = ArticleUrl.objects.filter(pk=url_pk)
+        url.delete()
+        return redirect('team_article:workspace', team_pk, user_pk)
+    else:
+        return redirect('account:user_home', request.user.pk)
 
 def delete_articlefile(request, team_pk, user_pk, file_pk):
-    files = ArticleFile.objects.filter(pk=file_pk)
-    files.delete()
-    return redirect('team_article:workspace', team_pk, user_pk)
+    if request.user.pk == user_pk:
+        files = ArticleFile.objects.filter(pk=file_pk)
+        files.delete()
+        return redirect('team_article:workspace', team_pk, user_pk)
+    else:
+        return redirect('account:user_home', request.user.pk)

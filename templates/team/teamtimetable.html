@@ -10,8 +10,7 @@ td{
 <ol class="breadcrumb page-breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">팀으로</a></li>
     <li class="breadcrumb-item"><a href="{% url 'team_article:workspace' team.pk user.pk %}">팀 자료실</a></li>
-    <!-- "{% url 'team_article:workspace' details.pk user.pk %}" -->
-    <li class="breadcrumb-item"><a href="{% url 'team_article:workspace' team.pk user.pk %}">팀 모임</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team:team_meeting_place' team.pk %}">팀 모임</a></li>
 </ol>
 
     <div class="subheader">
@@ -52,8 +51,8 @@ td{
         if(user_count >= 3){
             for (let i = 0; i < 13; i++) {
                 for (let j = 0; j < 7; j++) {
-                    if(arr[i][j] === user_count) $('#'+i+j).addClass('bg-info-200');
-                    else if(arr[i][j] === user_count-1) $('#'+i+j).addClass('bg-info-50');
+                    if(arr[i][j] === user_count) $('#'+i+j).css('background-color','rgb(177, 221, 253)');// rgb(255, 219, 232)
+                    else if(arr[i][j] === user_count-1) $('#'+i+j).css('background-color','rgb(223, 241, 255)');
                     // else if(arr[i][j] === user_count-2) $('#'+i+j).addClass('bg-info-50');
                 }
             }

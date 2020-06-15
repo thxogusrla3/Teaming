@@ -148,7 +148,27 @@
             </div>
         </div>
         <!-- photos -->
-        
+        <div class="card mb-g">
+            <div class="row row-grid no-gutters" id="member">
+                <div class="col-12">
+                    <div class="p-3">
+                        <h2 class="mb-0 fs-xl">
+                            내 시간표 
+                        </h2>
+                    </div>
+                </div>
+                {% for member in team_member %}
+                <div class="col-4">
+                    <a  class="text-center p-3 d-flex flex-column hover-highlight">
+                        <span class="profile-image rounded-circle d-block m-auto" style="background-image:url({% static 'img/default.png' %}); background-size: cover;"></span>
+                        <span class="d-block text-truncate text-muted fs-xs mt-1">{{ member.user.last_name }}{{member.user.first_name}}</span>
+                    </a>
+                    <!-- <a href="{% url 'team:expulsion_member' member.team.pk member.user.pk %}">x</a> -->
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
         <!-- contacts -->
         <div class="card mb-g">
             <div class="row row-grid no-gutters" id="member">
@@ -168,13 +188,6 @@
                     <!-- <a href="{% url 'team:expulsion_member' member.team.pk member.user.pk %}">x</a> -->
                 </div>
                 {% endfor %}
-                
-                
-                <!-- <div class="col-12">
-                    <div class="p-3 text-center">
-                        <a href="{% url 'team:all_team_member' details.pk %}" class="btn-link font-weight-bold">View all</a>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -184,10 +197,6 @@
                 <!-- BEGIN custom-scroll -->
                 <div class="flex-1 h-100" >
                     <div  class="w-100 p-4"id="chat_box" >
-                        <!-- start .chat-segment -->
-                        
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment -->
                         {% for chat in team_chat.all %}
                         {% if chat.user.pk == user.pk%}
                         <div class="chat-segment chat-segment-sent">
@@ -206,8 +215,6 @@
                             </div>
                         </div>
                         {% else %}
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment -->
                         <div class="chat-segment chat-segment-get">
                             <div class="color-fusion-300 text-muted mt-1 fs-xs">
                                 <strong>
@@ -227,14 +234,6 @@
                         </div>
                         {% endif %}
                         {% endfor %}
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment -->
-                        
-                        <!--  end .chat-segment -->
-                        <!-- start .chat-segment for timestamp -->
-                        
-                        
-                        <!--  end .chat-segment for timestamp -->
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.paginator import Paginator
 import simplejson as json
-
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
 # 회원가입
@@ -35,20 +35,50 @@ def sign_in(request):
             password = form.cleaned_data['password']
             # 폼이 검증되고 입력받은 아이디와 비밀번호가 일치하는 User모델을 user 변수에 저장
             user = auth.authenticate(username=username, password=password)
-
+            print(user)
             # user가 존재하면 로그인을 하고 메인화면으로 넘어감(메인이 구현안되있어 로그인으로 넘어가게 수정함)
             if user:
                 auth.login(request, user)
                 return redirect('account:user_home', user.pk)
             # 만약 존재하지 않으면 form에 에러메세지를 추가하고 46번째 줄로넘어가 템플릿을 렌더링함
-            else:
+            elif user == None:
                 form.add_error(None, '아이디 또는 비밀번호가 올바르지 않습니다.')
     # 방식이 get일때 빈폼을 생성하고 46번째 줄로넘어가 로그인 템플릿을 폼을 포함하여 렌더링한다
 
     else:
         form = SignInForm()
     return render(request, 'account/sign_in.html', {'form': form})
+# @csrf_exempt
+# def sign_in(request):
+#     if request.method == "POST":
+#         form = SignInForm(request.POST)
+#         if form.is_valid():
+#             username = request.POST['username']
+#             password = request.POST['password']
+#             # 폼이 검증되고 입력받은 아이디와 비밀번호가 일치하는 User모델을 user 변수에 저장
+#             user = auth.authenticate(username=username, password=password)
+#             print(password)
+#             # user가 존재하면 로그인을 하고 메인화면으로 넘어감(메인이 구현안되있어 로그인으로 넘어가게 수정함)
+#             if user:
+#                 data = {
+#                     'data' : 1,
+#                     'user_pk' : user.pk
+#                 }
+#                 auth.login(request, user)
+#                 # return redirect('account:user_home', user.pk)
+#                 return HttpResponse(json.dumps(data), content_type='application/json')
+#             # 만약 존재하지 않으면 form에 에러메세지를 추가하고 46번째 줄로넘어가 템플릿을 렌더링함
+#             else:
+#                 data = {
+#                     'data' : 2
+#                 }
+#                 # form.add_error(None, '아이디 또는 비밀번호가 올바르지 않습니다.')
+#                 return HttpResponse(json.dumps(data), content_type='application/json')
+#     # 방식이 get일때 빈폼을 생성하고 46번째 줄로넘어가 로그인 템플릿을 폼을 포함하여 렌더링한다
 
+#     else:
+#         form = SignInForm()
+#     return render(request, 'account/sign_in.html', {'form': form})
 def user_home(request, user_pk):
     user = request.user
     if user.id == user_pk:
@@ -103,10 +133,13 @@ def set_schedule(request):
         form = ScheduleForm(instance=request.user)
   
 def user_team(request, user_pk):
-    user = get_object_or_404(User, pk=user_pk)
-    user_team = TeamMember.objects.filter(user=user)
-    return render(request, 'account/user_team.html',{'user_team':user_team, 'user':user})
-
+    login_user = request.user
+    if login_user.pk == user_pk:
+        user = get_object_or_404(User, pk=user_pk)
+        user_team = TeamMember.objects.filter(user=user)
+        return render(request, 'account/user_team.html',{'user_team':user_team, 'user':user})
+    else:
+        return redirect("account:user_home", user.pk)
 #아이디 중복체크
 def overlap_username(request):
     username = request.GET["username"]
