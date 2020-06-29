@@ -21,8 +21,9 @@
 {% endblock %}
 {% block content %}
 <ol class="breadcrumb page-breadcrumb">
-    <li class="breadcrumb-item"><a href="javascript:void(0);">Team Home</a></li>
-    <li class="breadcrumb-item"><a href="javascript:void(0);">팀 시간표</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team:detail_team' team.pk %}">Team Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team:member_time_table' team.pk %}">팀 시간표</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'team_article:workspace' team.pk user.pk %}">팀 자료실</a></li>
 </ol>
 
     <div class="subheader">

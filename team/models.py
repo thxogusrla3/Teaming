@@ -17,8 +17,8 @@ class Team(models.Model):
     members = models.ManyToManyField(User, related_name='members', through='TeamMember')
     # votes = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.team_name
+    # def __str__(self):
+    #     return self.team_name
 
 class TeamMember(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
@@ -37,8 +37,8 @@ class TeamTimeTable(models.Model):
     total_time_table = models.CharField(default=('0' * 91), max_length=91)
     time = models.DateTimeField(auto_now_add=True, editable=False)
     
-    def __str__(self):
-        return self.total_time_table,self.time
+    # def __str__(self):
+    #     return self.total_time_table,self.time
         
 class TeamChat(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

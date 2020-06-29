@@ -38,6 +38,9 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         
         <style type="text/css">
             a { color: black; text-decoration: none;}
+            .page-logo, .page-sidebar, .nav-footer, .bg-brand-gradient{
+                background-color: #2f263d;
+            }
         </style>
         {% block all_style %}
         {% endblock %}
@@ -369,15 +372,21 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                     }
 
                     //팀 생성시 이름과 소개가 비어있을시 쓰지 못하게
-
-                    $('.team_create').focusout(function(){
+                    $('.team_create').change(function(){
                         var team_name = $("#team_name").val();
                         var introduce = $('#introduce').val();
                         // alert(team_name + " " + introduce);
-                        if(team_name != "" && introduce !=""){
-                            if(team_name.length>= 15) alert("이름이 너무 깁니다!")
-                            else $('#team_create').removeAttr('disabled');
+                        //이름과 설명이 각각 15 40자 넘으면 에러
+                        if(team_name.length>= 15) {
+                            $('#team_create').attr('disabled',true);
+                            alert("이름이 너무 깁니다!")
+                        }else if(team_name != "" && introduce !=""){
+                            $('#team_create').removeAttr('disabled');
                         }else{
+                            $('#team_create').attr('disabled',true);
+                        }
+                        if(introduce.length > 40){
+                            alert("팀의 소개를 줄여주세요!")
                             $('#team_create').attr('disabled',true);
                         }
                     });
@@ -385,6 +394,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                     
                     $(document).ready(function()
                     {
+                        // $('.page-logo, .page-sidebar, .nav-footer, .bg-brand-gradient').css('background-color',"#2f263d");
                         runDatePicker(); //달력 만들려면 필요함.
                         $('.datepicker').css('width','350px')
                         $('#chat_box_kth').scrollTop($('#chat_box').height());

@@ -10,5 +10,5 @@ class Mail(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, editable=False)
     modified_date = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.content
+    # def __str__(self):
+    #     return self.content

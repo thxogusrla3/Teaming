@@ -5,8 +5,8 @@ from django import forms
 
 # 폰 번호에 '-'가 2개 있어야 검증되서 통과함
 def phone_number_validator(value):
-    if value.count('-') != 2 and len(value) != 0:
-        raise forms.ValidationError("'-'를 포함해주세요")
+    if len(value) != 11 and len(value) == 0:
+        raise forms.ValidationError("핸드폰을 다시 확인해주세요!")
     return value
 
 
@@ -17,4 +17,5 @@ class User(AbstractUser):
     department = models.CharField(max_length=15, null=True)
     student_id = models.CharField(max_length=15, null=True)
 
-    
+    def __str__(self):
+        return self.username

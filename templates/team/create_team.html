@@ -22,12 +22,12 @@
                         {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ form.team_name.id_for_label }}">팀 이름</label>
-                        <input type="text" id="team_name" name="team_name" class="form-control team_create" placeholder="간단하게 지어주세요!">
+                        <input type="text" id="team_name" name="team_name" class="form-control team_create" placeholder="15자 이하..">
 
                     </div>
                     <div class="form-group">
                         <label for="{{ form.introduce.id_for_label }}">팀 소개</label>
-                        <input type="text" id="introduce" name="introduce" class="form-control team_create" placeholder="간단한 소개">
+                        <input type="text" id="introduce" name="introduce" class="form-control team_create" placeholder="40자 이하..">
                     </div>
                     <div class="row no-gutters">
                         <div class="col-md-4 ml-auto text-right">

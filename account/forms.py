@@ -23,26 +23,26 @@ class SignUpForm(forms.ModelForm):
                   'department',
                   'student_id'
                   ]
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Username'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Password'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Your Phone number'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'First name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}),
-            'department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '학과'}),
-            'student_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '학번'}),
-        }
-        labels = {
-            'username': '아이디',
-            'password': '비밀번호',
-            'email': '이메일',
-            'phone_number': '전화번호',
-            'first_name': '이름',
-            'last_name': '성',
-            'department':'학과',
-            'student_id':'학번'
-        }
+        # widgets = {
+        #     'username': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Username'}),
+        #     'password': forms.PasswordInput(attrs={'class': 'form-control','placeholder': 'Password'}),
+        #     'email': forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Email'}),
+        #     'phone_number': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Your Phone number'}),
+        #     'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'First name'}),
+        #     'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}),
+        #     'department': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '학과'}),
+        #     'student_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '학번'}),
+        # }
+        # labels = {
+        #     'username': '아이디',
+        #     'password': '비밀번호',
+        #     'email': '이메일',
+        #     'phone_number': '전화번호',
+        #     'first_name': '이름',
+        #     'last_name': '성',
+        #     'department':'학과',
+        #     'student_id':'학번'
+        # }
 
     def clean_username(self):
         check_username = self.cleaned_data['username']
@@ -50,10 +50,10 @@ class SignUpForm(forms.ModelForm):
             raise forms.ValidationError("아이디가 이미 사용중 입니다.")
         return check_username
 
-    def clean_email(self):
-        check_email = self.cleaned_data['email']
-        if User.objects.filter(email=check_email).exists():
-            raise forms.ValidationError("이메일이 사용중 입니다.")
+    # def clean_email(self):
+    #     check_email = self.cleaned_data['email']
+    #     if User.objects.filter(email=check_email).exists():
+    #         raise forms.ValidationError("이메일이 사용중 입니다.")
         
     def clean_check_password(self):
         password = self.cleaned_data['password']

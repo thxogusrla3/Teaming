@@ -225,7 +225,8 @@ def team_user_timetable(request, team_pk):
     return render(request, "team/teamtimetable.html",{'user_team':member_time_table, 'user':user, 'team':team,'time':user_time_table})
 
 def team_meeting_place(request, team_pk):
-    return render(request, "team/team_meeting_place.html")
+    team = get_object_or_404(Team, pk = team_pk)
+    return render(request, "team/team_meeting_place.html",{"team":team})
 
 def all_team_member(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)

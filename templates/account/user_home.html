@@ -27,9 +27,6 @@
                         <h2>시간표 설정</h2><small>요일 클릭시 해당 요일이 채워집니다.</small>
                         
                         <script type="text/javascript">
-                            // $('.js_summernote').val() 값을 받아와서 유저 디비에 넣고 
-                            //     alert()
-                            // })
                             function create_table() {
                                 var username = "{{user.username}}";
                                 var table = document.createElement("table");
@@ -131,6 +128,7 @@
                             /* ------------------------------------------------------------------------------------------ */
                             function submit(bool) {
                                 var time_table = document.getElementsByName("time_table")[0];
+                                
                                 if (bool) {
                                     
                                     var form = document.getElementById("schedule_form");
