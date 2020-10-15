@@ -1,6 +1,14 @@
-# TeamPle
+# Teaming
 
-U임승차(팀플에서 필요한 기능들을 한번에 모은 웹서비스)
+팀플에서 필요한 기능들을 한번에 모은 웹서비스
+
+# Setting
+- os: Ubuntu 18.04
+- language: Python, JavaScript
+- Database: Mysql, AWS RDS
+- FrameWork: Django
+- API: kakao map api
+- VSCODE
 
 ## 프로젝트 기본 설정
 
