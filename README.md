@@ -4,10 +4,11 @@
 
 # Setting
 - os: Ubuntu 18.04
-- language: Python, JavaScript
+- language: Python3, JavaScript
 - Database: Mysql, AWS RDS
 - FrameWork: Django
 - API: kakao map api
+- Library: pillow, simplejson
 - VSCODE
 
 ## 프로젝트 기본 설정
@@ -59,10 +60,3 @@ python manage.py migrate
 ```bash
 pip3 uninstall django
 pip3 install django==2.2.3
-
-
-## 라이브러리
-```
-pip install Pillow
-pip install simplejson
-
